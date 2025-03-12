@@ -3,12 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - https://github.com/Messansio/Left4Nothing
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - CharacterMesh
   - Water
   - UI
   - Water
