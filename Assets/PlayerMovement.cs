@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Player Stuff")]
     public CapsuleCollider playerCollision;
+    public GameObject playerFlashlight;
 
     [Header("Movement")]
     public float moveSpeed;
 
     private bool isCrouching;
+    private bool isFlashlightOn;
 
     public float groundDrag;
     
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode flashlightKey = KeyCode.F;
     bool readyToJump;
 
     [Header("Ground Check")]
@@ -47,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         isCrouching = false;
+        isFlashlightOn = false;
     }
 
     private void Update()
@@ -79,6 +83,25 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+        //FLASHLIGHT
+
+        if (Input.GetKeyDown(flashlightKey))
+        {
+            if (!isFlashlightOn)
+            {
+                playerFlashlight.SetActive(true);
+                isFlashlightOn = true;
+                Debug.Log("Flashlight ON");
+            }
+            /*if (isFlashlightOn)
+            {
+                playerFlashlight.SetActive(false);
+                isFlashlightOn = false;
+                Debug.Log("Flashlight OFF");
+            }*/
+        }
+
 
         //CROUCHING MECHANIC
 
