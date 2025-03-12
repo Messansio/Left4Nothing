@@ -5,8 +5,14 @@ using UnityEngine.Timeline;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("Player Stuff")]
+    public CapsuleCollider playerCollision;
+
     [Header("Movement")]
     public float moveSpeed;
+
+    private bool isCrouching;
 
     public float groundDrag;
     
@@ -16,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode crouchKey = KeyCode.LeftControl;
     bool readyToJump;
 
     [Header("Ground Check")]
@@ -34,9 +41,12 @@ public class PlayerMovement : MonoBehaviour
     // Start is call\ed before the first frame update
     void Start()
     {
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+
+        isCrouching = false;
     }
 
     private void Update()
@@ -69,15 +79,47 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+        //CROUCHING MECHANIC
+
+        if (!isCrouching)
+        {
+            if (Input.GetKeyDown(crouchKey))
+            {
+                playerCollision.height = playerCollision.height / 2;
+                
+                isCrouching = true;
+
+                moveSpeed = moveSpeed / 2;
+            }
+        }
+
+        if (isCrouching)
+        {
+            if (Input.GetKeyUp(crouchKey))
+            {
+                playerCollision.height = playerCollision.height * 2;
+
+                isCrouching = false;
+
+                moveSpeed = moveSpeed * 2;
+            }
+        }
+
+        playerHeight = playerCollision.height;
+
     }
+
+        
 
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        if(grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         
-        else if(!grounded)
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        if (grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
+        else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
