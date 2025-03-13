@@ -15,9 +15,15 @@ C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
+<<<<<<< HEAD
 54970
 Successfully changed project path to: C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing
 C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing
+=======
+54694
+Successfully changed project path to: C:/Users/andre/OneDrive - University of Pisa/Documenti/Unity/Projects/Left4Nothing
+C:/Users/andre/OneDrive - University of Pisa/Documenti/Unity/Projects/Left4Nothing
+>>>>>>> master
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -49,14 +55,24 @@ C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
+<<<<<<< HEAD
 Player connection [10716] Host "[IP] 192.168.0.139 [Port] 0 [Flags] 2 [Guid] 2273379403 [EditorId] 2273379403 [Version] 1048832 [Id] WindowsEditor(7,NiccolòAcer) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
 Player connection [10716] Host "[IP] 192.168.0.139 [Port] 0 [Flags] 2 [Guid] 2273379403 [EditorId] 2273379403 [Version] 1048832 [Id] WindowsEditor(7,NiccolòAcer) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+=======
+Player connection [29684] Host "[IP] 192.168.152.23 [Port] 0 [Flags] 2 [Guid] 1623999721 [EditorId] 1623999721 [Version] 1048832 [Id] WindowsEditor(7,BOOK-CVA7UPUJRR) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [29684] Host "[IP] 192.168.152.23 [Port] 0 [Flags] 2 [Guid] 1623999721 [EditorId] 1623999721 [Version] 1048832 [Id] WindowsEditor(7,BOOK-CVA7UPUJRR) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+>>>>>>> master
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with 15 workers.
 Default GameObject BitMask: Water already registered
 Default GameObject BitMask: UI already registered
+<<<<<<< HEAD
 Refreshing native plugins compatible for Editor in 11.30 ms, found 3 plugins.
+=======
+Refreshing native plugins compatible for Editor in 18.24 ms, found 3 plugins.
+>>>>>>> master
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.29f1 (8d510ca76d2b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.29f1/Editor/Data/Resources/UnitySubsystems
@@ -72,6 +88,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.29f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.29f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.29f1/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< HEAD
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56580
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
@@ -83,11 +100,25 @@ Mono: successfully reloaded assembly
 - Finished resetting the current domain, in  0.398 seconds
 Domain Reload Profiling: 987ms
 	BeginReloadAssembly (147ms)
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56028
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.29f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.009842 seconds.
+- Loaded All Assemblies, in  0.559 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.394 seconds
+Domain Reload Profiling: 951ms
+	BeginReloadAssembly (224ms)
+>>>>>>> master
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
+<<<<<<< HEAD
 	RebuildCommonClasses (43ms)
 	RebuildNativeTypeToScriptingClass (14ms)
 	initialDomainReloadingComplete (73ms)
@@ -110,6 +141,30 @@ Domain Reload Profiling: 987ms
 			BeforeProcessingInitializeOnLoad (4ms)
 			ProcessInitializeOnLoadAttributes (230ms)
 			ProcessInitializeOnLoadMethodAttributes (54ms)
+=======
+	RebuildCommonClasses (48ms)
+	RebuildNativeTypeToScriptingClass (13ms)
+	initialDomainReloadingComplete (75ms)
+	LoadAllAssembliesAndSetupDomain (196ms)
+		LoadAssemblies (217ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (194ms)
+			TypeCache.Refresh (192ms)
+				TypeCache.ScanAssembly (173ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (395ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (300ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (12ms)
+			SetLoadedEditorAssemblies (10ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (193ms)
+			ProcessInitializeOnLoadMethodAttributes (82ms)
+>>>>>>> master
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -117,8 +172,13 @@ Domain Reload Profiling: 987ms
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
+<<<<<<< HEAD
 - Loaded All Assemblies, in  0.801 seconds
 Refreshing native plugins compatible for Editor in 5.43 ms, found 3 plugins.
+=======
+- Loaded All Assemblies, in  0.796 seconds
+Refreshing native plugins compatible for Editor in 8.27 ms, found 3 plugins.
+>>>>>>> master
 Native extension for WindowsStandalone target not found
 System.Exception: Error! Visual Scripting: couldn't find visual scripting package
   at Unity.VisualScripting.PackageVersionUtility.get_version () [0x00043] in .\Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Utilities\PackageVersionUtility.cs:31 
@@ -138,6 +198,7 @@ UnityEngine.Debug:LogError (object)
 UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
 Mono: successfully reloaded assembly
+<<<<<<< HEAD
 - Finished resetting the current domain, in  1.407 seconds
 Domain Reload Profiling: 2202ms
 	BeginReloadAssembly (196ms)
@@ -161,19 +222,52 @@ Domain Reload Profiling: 2202ms
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
 		SetupLoadedEditorAssemblies (1199ms)
+=======
+- Finished resetting the current domain, in  0.605 seconds
+Domain Reload Profiling: 1396ms
+	BeginReloadAssembly (156ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (32ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (43ms)
+	LoadAllAssembliesAndSetupDomain (553ms)
+		LoadAssemblies (429ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (207ms)
+			TypeCache.Refresh (186ms)
+				TypeCache.ScanAssembly (166ms)
+			ScanForSourceGeneratedMonoScriptInfo (13ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (605ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (447ms)
+>>>>>>> master
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (7ms)
 			SetLoadedEditorAssemblies (6ms)
 			RefreshPlugins (0ms)
+<<<<<<< HEAD
 			BeforeProcessingInitializeOnLoad (78ms)
 			ProcessInitializeOnLoadAttributes (1037ms)
 			ProcessInitializeOnLoadMethodAttributes (40ms)
 			AfterProcessingInitializeOnLoad (31ms)
+=======
+			BeforeProcessingInitializeOnLoad (67ms)
+			ProcessInitializeOnLoadAttributes (338ms)
+			ProcessInitializeOnLoadMethodAttributes (23ms)
+			AfterProcessingInitializeOnLoad (7ms)
+>>>>>>> master
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (15ms)
 Default GameObject BitMask: Water already registered
 Default GameObject BitMask: UI already registered
+<<<<<<< HEAD
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
 Refreshing native plugins compatible for Editor in 12.71 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
@@ -181,6 +275,15 @@ Unloading 3171 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 34 unused Assets / (57.7 KB). Loaded Objects now: 3646.
 Memory consumption went from 130.5 MB to 130.4 MB.
 Total: 31.177900 ms (FindLiveObjects: 0.303000 ms CreateObjectMapping: 0.142000 ms MarkObjects: 30.464900 ms  DeleteObjects: 0.266000 ms)
+=======
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 6.62 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3129 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 34 unused Assets / (57.7 KB). Loaded Objects now: 3603.
+Memory consumption went from 130.5 MB to 130.4 MB.
+Total: 3.897400 ms (FindLiveObjects: 0.486300 ms CreateObjectMapping: 0.270900 ms MarkObjects: 2.976700 ms  DeleteObjects: 0.161900 ms)
+>>>>>>> master
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
