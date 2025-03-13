@@ -5,19 +5,20 @@ using UnityEngine.Timeline;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    #region Variables
     [Header("Player Stuff")]
     public CapsuleCollider playerCollision;
     public GameObject playerFlashlight;
 
     [Header("Movement")]
     public float moveSpeed;
+    public float runningSpeed;
+    public float crouchSpeed;
 
     private bool isCrouching;
     private bool isFlashlightOn;
 
     public float groundDrag;
-    
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
@@ -26,128 +27,122 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode flashlightKey = KeyCode.F;
-    bool readyToJump;
+    private bool readyToJump;
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    private bool grounded;
+
+    [Header("Tweaks")]
+    public float crouchHeightMultiplier = 0.5f;
+    public float crouchSpeedMultiplier = 0.5f;
+    public bool enableFlashlightDebugLogs = true;
 
     public Transform orientation;
 
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
+    private Vector3 moveDirection;
+    private Rigidbody rb;
+    #endregion
 
-    Vector3 moveDirection;
-
-    Rigidbody rb;
-    // Start is call\ed before the first frame update
-    void Start()
+    #region Unity Lifecycle Methods
+    private void Start()
     {
+        // Initialize movement speeds
+        runningSpeed = moveSpeed;
+        // Replace hard-coded values with multipliers
+        crouchSpeed = moveSpeed * crouchSpeedMultiplier;
 
+        // Setup rigidbody
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        readyToJump = true;
 
+        // Initialize states
+        readyToJump = true;
         isCrouching = false;
         isFlashlightOn = false;
     }
 
     private void Update()
     {
+        // Check if player is grounded
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
+        // Handle input and speed
         MyInput();
         SpeedControl();
 
-        if(grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
+        // Apply drag when grounded
+        rb.drag = grounded ? groundDrag : 0;
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
     }
+    #endregion
+
+    #region Input Handling
     private void MyInput()
     {
+        // Get movement input
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        // Handle jumping
         if(Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
-
             Jump();
-
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        //FLASHLIGHT
-
+        // Handle flashlight toggle
         if (Input.GetKeyDown(flashlightKey))
         {
-            if (!isFlashlightOn)
-            {
-                playerFlashlight.SetActive(true);
-                isFlashlightOn = true;
-                Debug.Log("Flashlight ON");
-            }
-            /*if (isFlashlightOn)
-            {
-                playerFlashlight.SetActive(false);
-                isFlashlightOn = false;
-                Debug.Log("Flashlight OFF");
-            }*/
+            isFlashlightOn = !isFlashlightOn;
+            playerFlashlight.SetActive(isFlashlightOn);
+
+            if(enableFlashlightDebugLogs)
+                Debug.Log(isFlashlightOn ? "Flashlight ON" : "Flashlight OFF");
         }
 
-
-        //CROUCHING MECHANIC
-
-        if (!isCrouching)
+        // Handle crouching
+        if (!isCrouching && Input.GetKeyDown(crouchKey))
         {
-            if (Input.GetKeyDown(crouchKey))
-            {
-                playerCollision.height = playerCollision.height / 2;
-                
-                isCrouching = true;
-
-                moveSpeed = moveSpeed / 2;
-            }
+            playerCollision.height *= crouchHeightMultiplier;
+            isCrouching = true;
+            moveSpeed = crouchSpeed;
         }
 
-        if (isCrouching)
+        if (isCrouching && Input.GetKeyUp(crouchKey))
         {
-            if (Input.GetKeyUp(crouchKey))
-            {
-                playerCollision.height = playerCollision.height * 2;
-
-                isCrouching = false;
-
-                moveSpeed = moveSpeed * 2;
-            }
+            playerCollision.height /= crouchHeightMultiplier;
+            isCrouching = false;
+            moveSpeed = runningSpeed;
         }
 
+        // Update player height based on collider
         playerHeight = playerCollision.height;
-
     }
+    #endregion
 
-        
-
+    #region Movement Methods
     private void MovePlayer()
     {
-        
+        // Calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        if (grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-        else if (!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        // Apply forces based on ground state
+        float force = moveSpeed * 10f * (grounded ? 1f : airMultiplier);
+        rb.AddForce(moveDirection.normalized * force, ForceMode.Force);
     }
 
     private void SpeedControl()
     {
+        // Limit horizontal velocity
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if(flatVel.magnitude > moveSpeed)
         {
@@ -158,11 +153,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        // Reset vertical velocity and apply jump force
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
     private void ResetJump()
     {
         readyToJump = true;
     }
+    #endregion
 }
