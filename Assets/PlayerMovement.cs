@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
 
     private bool isCrouching;
-    private bool isFlashlightOn;
 
     public float groundDrag;
     
@@ -50,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         isCrouching = false;
-        isFlashlightOn = false;
     }
 
     private void Update()
@@ -88,18 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(flashlightKey))
         {
-            if (!isFlashlightOn)
-            {
-                playerFlashlight.SetActive(true);
-                isFlashlightOn = true;
-                Debug.Log("Flashlight ON");
-            }
-            /*if (isFlashlightOn)
-            {
-                playerFlashlight.SetActive(false);
-                isFlashlightOn = false;
-                Debug.Log("Flashlight OFF");
-            }*/
+            playerFlashlight.SetActive(!playerFlashlight.activeSelf);
         }
 
 

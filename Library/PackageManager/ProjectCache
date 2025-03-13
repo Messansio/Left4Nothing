@@ -5,26 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-<<<<<<< HEAD
-      ticks: 638774010204908001
-    m_Hash: 169349519
-=======
-      ticks: 638774512220088062
-    m_Hash: 4282987027
->>>>>>> master
+      ticks: 638774529963602273
+    m_Hash: 2278183584
   m_LockFileStatus:
     m_FilePath: C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-<<<<<<< HEAD
-      ticks: 638774010205020675
-    m_Hash: 3961816644
-=======
-      ticks: 638774512220108157
-    m_Hash: 4043454019
->>>>>>> master
+      ticks: 638774529963602273
+    m_Hash: 4187031645
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
