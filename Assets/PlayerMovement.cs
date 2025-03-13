@@ -1,15 +1,52 @@
+/*
+    PlayerMovement.cs
+    -------------------------------------------------------
+    This script handles movement-based functionalities of a player character:
+    - Walking, crouching, and jumping
+    - Applying physics-based forces
+    - Toggling the player's flashlight
+    - Detecting ground collisions
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 
+/*
+    CLASS: PlayerMovement
+    -------------------------------------------------------
+    Inherits from MonoBehaviour; controls primary player input
+    and movement mechanics. Also manages character states such 
+    as isCrouching, isFlashlightOn, and readyToJump.
+*/
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
+
+    /* 
+       [HEADER: Player Components]
+       -------------------------------------------------------
+       - playerCollision is the BoxCollider or CapsuleCollider
+         used for collision detection.
+       - playerFlashlight references the player’s flashlight GameObject 
+         that can be toggled on/off.
+    */
     [Header("Player Stuff")]
     public CapsuleCollider playerCollision;
     public GameObject playerFlashlight;
 
+    /*
+        [HEADER: Movement]
+        -------------------------------------------------------
+        - moveSpeed/runningSpeed/crouchSpeed: controls overall
+          walking, running, and crouch movement speed.
+        - isCrouching tracks current crouch state.
+        - isFlashlightOn tracks whether flashlight is active.
+        - groundDrag, jumpForce, jumpCooldown, airMultiplier: 
+          control physical properties influencing the player's
+          movement behavior.
+    */
     [Header("Movement")]
     public float moveSpeed;
     public float runningSpeed;
@@ -23,75 +60,116 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
 
+    /*
+        [HEADER: Keybinds]
+        -------------------------------------------------------
+        Defines default input keys for the player's jump, crouch,
+        and flashlight toggle. readyToJump ensures there is a delay
+        between jumps (controlled by jumpCooldown).
+    */
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode flashlightKey = KeyCode.F;
     private bool readyToJump;
 
+    /*
+        [HEADER: Ground Check]
+        -------------------------------------------------------
+        - playerHeight tracks the current height of the player's collider.
+        - whatIsGround sets the LayerMask for valid ground collisions.
+        - grounded indicates if the player is currently in contact
+          with the ground.
+    */
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
     private bool grounded;
 
+    /*
+        [HEADER: Tweaks]
+        -------------------------------------------------------
+        - crouchHeightMultiplier scales the collider height
+          during a crouch.
+        - crouchSpeedMultiplier lowers the movement speed
+          while crouched.
+        - enableFlashlightDebugLogs toggles debug messages.
+    */
     [Header("Tweaks")]
     public float crouchHeightMultiplier = 0.5f;
     public float crouchSpeedMultiplier = 0.5f;
     public bool enableFlashlightDebugLogs = true;
 
+    // Reference to the camera orientation, typically parented under the player
     public Transform orientation;
 
+    // Private variables to store input values and references
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
     private Rigidbody rb;
+
     #endregion
 
     #region Unity Lifecycle Methods
+
+    /*
+        Called once at startup. Assigns movement speeds, initializes
+        crouched speed, sets up the Rigidbody, and resets player states.
+    */
     private void Start()
     {
-        // Initialize movement speeds
         runningSpeed = moveSpeed;
-        // Replace hard-coded values with multipliers
         crouchSpeed = moveSpeed * crouchSpeedMultiplier;
 
-        // Setup rigidbody
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        // Initialize states
         readyToJump = true;
         isCrouching = false;
         isFlashlightOn = false;
     }
 
+    /*
+        Called every frame. 
+        - Updates grounded state using a Raycast.
+        - Checks for input and adjusts movement speeds.
+        - Applies drag only if grounded.
+    */
     private void Update()
     {
-        // Check if player is grounded
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        // Handle input and speed
         MyInput();
         SpeedControl();
 
-        // Apply drag when grounded
         rb.drag = grounded ? groundDrag : 0;
     }
 
+    /*
+        Called on a fixed interval. Updates player's movement
+        by applying physics forces in MovePlayer().
+    */
     private void FixedUpdate()
     {
         MovePlayer();
     }
+
     #endregion
 
     #region Input Handling
+
+    /*
+        Captures primary user inputs for horizontal/vertical movement,
+        jumping, flashlight toggling, and crouching.
+    */
     private void MyInput()
     {
         // Get movement input
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Handle jumping
+        // Jump logic: checks for key press, readyToJump state, and ground contact
         if(Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
@@ -99,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        // Handle flashlight toggle
+        // Flashlight toggle
         if (Input.GetKeyDown(flashlightKey))
         {
             isFlashlightOn = !isFlashlightOn;
@@ -109,40 +187,45 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log(isFlashlightOn ? "Flashlight ON" : "Flashlight OFF");
         }
 
-        // Handle crouching
+        // Crouch logic: modifies collider height and reduces movement speed
         if (!isCrouching && Input.GetKeyDown(crouchKey))
         {
             playerCollision.height *= crouchHeightMultiplier;
             isCrouching = true;
             moveSpeed = crouchSpeed;
         }
-
-        if (isCrouching && Input.GetKeyUp(crouchKey))
+        else if (isCrouching && Input.GetKeyUp(crouchKey))
         {
             playerCollision.height /= crouchHeightMultiplier;
             isCrouching = false;
             moveSpeed = runningSpeed;
         }
 
-        // Update player height based on collider
+        // Update stored playerHeight using the current collision height
         playerHeight = playerCollision.height;
     }
+
     #endregion
 
     #region Movement Methods
+
+    /*
+        Moves the player along X-Z plane based on input direction
+        and applies a force relative to whether the player is in-air.
+    */
     private void MovePlayer()
     {
-        // Calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        // Apply forces based on ground state
         float force = moveSpeed * 10f * (grounded ? 1f : airMultiplier);
         rb.AddForce(moveDirection.normalized * force, ForceMode.Force);
     }
 
+    /*
+        Caps the player's horizontal velocity to the current moveSpeed,
+        preventing exploits or uncontrolled acceleration.
+    */
     private void SpeedControl()
     {
-        // Limit horizontal velocity
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if(flatVel.magnitude > moveSpeed)
         {
@@ -151,16 +234,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /*
+        Resets the player's vertical velocity and applies a jump impulse.
+        This prevents the jump force from stacking if the player is
+        already moving upward.
+    */
     private void Jump()
     {
-        // Reset vertical velocity and apply jump force
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
+    /*
+        Delays the player's ability to jump again
+        until jumpCooldown has passed.
+    */
     private void ResetJump()
     {
         readyToJump = true;
     }
+
     #endregion
 }
