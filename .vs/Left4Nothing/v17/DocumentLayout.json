@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|c:\\users\\panuc\\onedrive\\documents\\github\\left4nothing\\assets\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|c:\\users\\panuc\\onedrive\\documents\\github\\left4nothing\\assets\\weaponbehaviour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|solutionrelative:assets\\weaponbehaviour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\assets\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|solutionrelative:assets\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\assets\\game_direction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2006CBE6-F5FD-C052-8603-B72AE82D8EBC}|Assembly-CSharp.csproj|solutionrelative:assets\\game_direction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "weaponBehaviour.cs",
+              "DocumentMoniker": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\Assets\\weaponBehaviour.cs",
+              "RelativeDocumentMoniker": "Assets\\weaponBehaviour.cs",
+              "ToolTip": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\Assets\\weaponBehaviour.cs",
+              "RelativeToolTip": "Assets\\weaponBehaviour.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T16:03:29.521Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "game_direction.cs",
+              "DocumentMoniker": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\Assets\\game_direction.cs",
+              "RelativeDocumentMoniker": "Assets\\game_direction.cs",
+              "ToolTip": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\Assets\\game_direction.cs",
+              "RelativeToolTip": "Assets\\game_direction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-13T16:01:22.188Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "PlayerMovement.cs",
               "DocumentMoniker": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\Assets\\PlayerMovement.cs",
               "RelativeDocumentMoniker": "Assets\\PlayerMovement.cs",
               "ToolTip": "C:\\Users\\panuc\\OneDrive\\Documents\\GitHub\\Left4Nothing\\Assets\\PlayerMovement.cs",
               "RelativeToolTip": "Assets\\PlayerMovement.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAAwF8AAAANAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAwLoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T15:55:47.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-12T15:55:47.615Z"
             }
           ]
         }
