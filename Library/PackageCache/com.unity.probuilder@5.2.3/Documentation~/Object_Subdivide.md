@@ -1,9 +1,3 @@
-# ![Subdivide Object icon](images/icons/Object_Subdivide.png) Subdivide Object
-
-The __Subdivide Object__ action divides every face on selected objects, allowing for greater levels of detail when modeling.
-
-![Subdivide Object Example](images/SubdivideObject_Example.png)
-
-To do this, for each face, it adds a vertex at the center of each edge and connects them in the center of the face.
-
-> **Tip**: You can also launch this action from the ProBuilder menu (**Tools** > **ProBuilder** > **Object** > **Subdivide Object**).
+version https://git-lfs.github.com/spec/v1
+oid sha256:55be873a941c4a82962d4b89b01a30fdad9572214c136278c7fc3cd28d476584
+size 521

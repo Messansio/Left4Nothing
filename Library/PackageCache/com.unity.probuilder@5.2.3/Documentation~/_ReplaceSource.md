@@ -1,1 +1,3 @@
-The **Replace Source** option determines whether ProBuilder updates the GameObject's [MeshFilter.sharedMesh](https://docs.unity3d.com/ScriptReference/MeshFilter-sharedMesh.html) to point to the exported Mesh data (enabled) or to the source of the exported Mesh (disabled).
+version https://git-lfs.github.com/spec/v1
+oid sha256:25c8b98aac2962c2fb3c4d761a616ee8290a6266b624baa3fa24a88a20a1b5e3
+size 273

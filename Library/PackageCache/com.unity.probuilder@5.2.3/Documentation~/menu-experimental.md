@@ -1,14 +1,3 @@
-# Experimental
-
-This sub-menu provides access to experimental features.
-
-![Tools > ProBuilder > Experimental menu](images/menu-experimental.png)
-
-> **Note**: This sub-menu is only available when you enable the [experimental features preference](preferences.md#experimental).
-
-Experimental features aren’t ready for public use, but are included for users to try out early, and report issues/feedback. 
-
-## Boolean (CSG) Tool
-
-The [Boolean](boolean.md) feature is the only option available on this sub-menu. It lets you create new Meshes from intersection, union, and subtraction boolean operations.
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:609b1627c2517b7f19b0465846bcbc8af6deb141dfe5e00be9f43950643ab907
+size 601

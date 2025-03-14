@@ -1,21 +1,3 @@
-# Repair
-
-Use this sub-menu to access several helper scripts that repair problems with ProBuilder Meshes in the scene.
-
-![Tools > ProBuilder > Repair menu](images/menu-repair.png)
-
-## Rebuild All ProBuilder Objects
-
-Rebuilds Mesh representations from stored ProBuilder data for each GameObject in the scene. If you have a lot of GameObjects in a scene, this can take a while.
-
-## Rebuild Shared Indexes Cache
-
-Discards all shared vertex position data and rebuilds based on proximity.
-
-## Remove Degenerate Triangles
-
-Deletes triangles on a Mesh that are either taking up no space, or are duplicates.
-
-## Check for Broken ProBuilder References
-
-Checks for and repairs any missing or broken ProBuilder references in the scene.
+version https://git-lfs.github.com/spec/v1
+oid sha256:f0cb3dab1be48e4c449f9f0e1b08afbc929cf184b1fd46629222a5525c6106f0
+size 724

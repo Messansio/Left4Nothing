@@ -1,14 +1,3 @@
-# Experimental features
-
-ProBuilder has these experimental features:
-
-- [Bezier Shape tool](workflow-create-bezier.md)
-- [Boolean operations](boolean.md)
-
-These features are still under development; they are not fully tested, and might reduce ProBuilder's stability. Use these with caution.
-
-By default, experimental features are disabled.
-
-To enable them, [enable the experimental features](preferences.md#experimental) preference:
-
-![Access ProBuilder-specific preferences on Unity's Preferences window](images/Experimental_Preferences.png)
+version https://git-lfs.github.com/spec/v1
+oid sha256:15cce0603cbd3d22a23640580c38184bb5a99dfd6ac0ca58325329ceaa589c00
+size 543
