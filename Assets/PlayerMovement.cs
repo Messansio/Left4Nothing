@@ -4,7 +4,7 @@
     This script handles movement-based functionalities of a player character:
     - Walking, crouching, and jumping
     - Applying physics-based forces
-    - Toggling the player's flashlight
+   
     - Detecting ground collisions
 */
 
@@ -18,7 +18,7 @@ using UnityEngine.Timeline;
     -------------------------------------------------------
     Inherits from MonoBehaviour; controls primary player input
     and movement mechanics. Also manages character states such 
-    as isCrouching, isFlashlightOn, and readyToJump.
+    as isCrouching, and readyToJump.
 */
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,12 +29,11 @@ public class PlayerMovement : MonoBehaviour
        -------------------------------------------------------
        - playerCollision is the BoxCollider or CapsuleCollider
          used for collision detection.
-       - playerFlashlight references the player’s flashlight GameObject 
-         that can be toggled on/off.
+       
     */
     [Header("Player Stuff")]
     public CapsuleCollider playerCollision;
-    public GameObject playerFlashlight;
+    
 
     /*
         [HEADER: Movement]
@@ -42,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
         - moveSpeed/runningSpeed/crouchSpeed: controls overall
           walking, running, and crouch movement speed.
         - isCrouching tracks current crouch state.
-        - isFlashlightOn tracks whether flashlight is active.
         - groundDrag, jumpForce, jumpCooldown, airMultiplier: 
           control physical properties influencing the player's
           movement behavior.
@@ -53,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
 
     private bool isCrouching;
-    private bool isFlashlightOn;
+    
 
     public float groundDrag;
     public float jumpForce;
@@ -70,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
-    public KeyCode flashlightKey = KeyCode.F;
+    
     private bool readyToJump;
 
     /*
@@ -98,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Tweaks")]
     public float crouchHeightMultiplier = 0.5f;
     public float crouchSpeedMultiplier = 0.5f;
-    public bool enableFlashlightDebugLogs = true;
+    
 
     // Reference to the camera orientation, typically parented under the player
     public Transform orientation;
@@ -127,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
         readyToJump = true;
         isCrouching = false;
-        isFlashlightOn = false;
+        
     }
 
     /*
@@ -177,15 +175,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        // Flashlight toggle
-        if (Input.GetKeyDown(flashlightKey))
-        {
-            isFlashlightOn = !isFlashlightOn;
-            playerFlashlight.SetActive(isFlashlightOn);
-
-            if(enableFlashlightDebugLogs)
-                Debug.Log(isFlashlightOn ? "Flashlight ON" : "Flashlight OFF");
-        }
+        
 
         // Crouch logic: modifies collider height and reduces movement speed
         if (!isCrouching && Input.GetKeyDown(crouchKey))

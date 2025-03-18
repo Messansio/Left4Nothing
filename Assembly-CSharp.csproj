@@ -65,6 +65,7 @@
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\game_direction.cs" />
     <Compile Include="Assets\PlayerCam.cs" />
+    <Compile Include="Assets\flashlight.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
