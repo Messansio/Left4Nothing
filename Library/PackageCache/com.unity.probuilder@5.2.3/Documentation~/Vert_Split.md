@@ -1,9 +1,3 @@
-# ![Split Vertices icon](images/icons/Vert_Split.png) Split Vertices
-
-The __Split Vertices__ action splits a vertex into individual vertices (one for each adjacent face) so that you can move the faces independently.
-
-![Create 4 vertices from the original vertex](images/SplitVerts_Example.png)
-
-> **Note:** When a vertex splits, the newly separated vertices remain in place. This image only shows the vertices apart as a demonstration, to illustrate that the original vertex became four.
-
-> **Tip:** You can also use this action with the **Alt/Opt+X** shortcut, or from the ProBuilder menu (**Tools** > **ProBuilder** > **Geometry** > **Split Vertices**).
+version https://git-lfs.github.com/spec/v1
+oid sha256:240de6d6c626d9f797ecf8d8171914485583b99ab157b45fb64767b65d8471ed
+size 656

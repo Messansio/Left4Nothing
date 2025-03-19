@@ -1,9 +1,3 @@
-# ![Triangulate icon](images/icons/Object_Triangulate.png) Triangulate (Objects)
-
-The __Triangulate__ action reduces all polygons to their base triangles. This creates a sharp, faceted appearance.
-
-> **Tip**: You can also launch this action from the ProBuilder menu (**Tools** > **ProBuilder** > **Object** > **Triangulate**).
-
-![Triangulate Object Example](images/TriangulateObject_Example.png)
-
-> **Note:** To smooth some of the hard edges, you can [add and remove smoothing groups](workflow-edit-smoothing.md) across the faces of the Mesh.
+version https://git-lfs.github.com/spec/v1
+oid sha256:1ce4998d56653768aa773dfc49ebf604117df103b5c1b183560cb98f0334bd1e
+size 543

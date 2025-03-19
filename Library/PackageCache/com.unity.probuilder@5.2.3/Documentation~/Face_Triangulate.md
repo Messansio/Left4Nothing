@@ -1,9 +1,3 @@
-# ![Triangulate Faces icon](images/icons/Face_Triangulate.png) Triangulate Faces
-
-The __Triangulate Faces__ action reduces selected faces to their base triangles. This creates a faceted, non-smooth appearance. 
-
-> **Tip**: You can also launch this action from the ProBuilder menu (**Tools** > **ProBuilder** > **Geometry** > **Triangulate**).
-
-![Triangulate Object Example](images/TriangulateObject_Example.png)
-
-> **Tip:** When you triangulate faces, you can smooth the hard edges with the [Smooth Group Editor window](smoothing-groups.md).
+version https://git-lfs.github.com/spec/v1
+oid sha256:cd2ed1683300aa6eb84efc0fec595cbc59b6c03b2714d4b858a0ec2786bc3cf4
+size 542

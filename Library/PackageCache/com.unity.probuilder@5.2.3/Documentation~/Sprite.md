@@ -1,6 +1,3 @@
-# Sprite
-In ProBuilder, a sprite shape is a [plane](Plane.md) with all values set to 1 unit. 
-
-![Sprite shape](images/shape-tool_sprite.png)
-
-The sprite shape has no shape-specific properties.
+version https://git-lfs.github.com/spec/v1
+oid sha256:d6411c225a1ff79d22434c9e7ede971e1adf1cfb5e25faeb7e218335d8e099ea
+size 193

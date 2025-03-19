@@ -1,1 +1,3 @@
-Deprecated public classes that we need to keep until we change the major version to 3.x, since removing any public API in a minor version is forbiden.
+version https://git-lfs.github.com/spec/v1
+oid sha256:6432f3841526ca05dead358781136ef287737cac59e52ee3876a1cdb0bcd4402
+size 150

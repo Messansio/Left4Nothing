@@ -1,16 +1,3 @@
-# Editor window reference
-
-This section provides information on the following Editor [windows](overview-ui.md#pb_editors) that ProBuilder uses:
-
-- [Lightmap UV Editor](lightmap-uv.md)
-- [Material Editor window](material-tools.md)
-- [Positions Editor window](vertex-positions.md)
-- [ProBuilder Preferences window](preferences.md)
-- [Shape Tool window](shape-tool.md)
-- [Smooth Group Editor window](smoothing-groups.md)
-- [UV Editor window](uv-editor.md)
-- [Vertex Colors window](vertex-colors.md)
-
-
-
-> **Note:** For documentation on the [Boolean (Experimental) window](boolean.md), see the [Experimental features](experimental.md) section of the documentation.
+version https://git-lfs.github.com/spec/v1
+oid sha256:73d51426990f079a5b0a4bd1e854d3ae0efbf37c90be9813cd8f5dddfed4c228
+size 660

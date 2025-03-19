@@ -1,5 +1,3 @@
-com.unity.probuilder © 2023 Unity Technologies
-
-Licensed under the Unity Companion License for Unity-dependent projects (see [https://unity3d.com/legal/licenses/unity_companion_license](https://unity3d.com/legal/licenses/unity_companion_license)).
-
-Unless expressly provided otherwise, the Software under this license is made available strictly on an “AS IS” BASIS WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. Please review the license for details on these and other terms and conditions.
+version https://git-lfs.github.com/spec/v1
+oid sha256:2559f4e913229bfc5458fe7838b6a03ec03969c25c2fb5f50e8f2abb6067b4be
+size 499

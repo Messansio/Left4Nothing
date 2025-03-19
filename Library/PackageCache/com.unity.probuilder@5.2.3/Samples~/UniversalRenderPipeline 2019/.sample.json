@@ -1,5 +1,3 @@
-{
-	"displayName":"URP Support for 2019.X",
-	"description": "Shaders and materials for the Universal Render Pipeline (for 2019.X editors).",
-	"createSeparatePackage": false
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:df3c26b1331806d8c8ff76506178dcd5245c4e31f2bcf7901019b81db3af6f4d
+size 174

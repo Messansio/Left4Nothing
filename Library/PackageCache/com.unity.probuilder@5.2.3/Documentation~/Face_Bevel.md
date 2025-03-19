@@ -1,16 +1,3 @@
-# ![Bevel icon](images/icons/Edge_Bevel.png) Bevel (Faces)
-
-The __Bevel__ action performs the [Bevel Edge](Edge_Bevel.md) action on all the edges of the selected face(s).
-
-![Bevel top of cube](images/BevelFace_Example.png)
-
-
-
-## Bevel Options
-
-![Bevel Face options](images/Edge_Bevel_props.png)
-
-To change the width of the bevel, change the __Distance__ to move the newly created edge(s) from the position of the original edge(s). This becomes the width of the new face(s).
-
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:55961a69fcff92a6b7c890060fcc5046666096e2190eb5efe49676f462ab6d89
+size 477

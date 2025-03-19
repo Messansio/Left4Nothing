@@ -1,7 +1,3 @@
-# Materials
-
-Use this sub-menu to apply specific Material presets to the selection.
-
-![Tools > ProBuilder > Materials menu](images/menu-materials.png)
-
-Select the specific Material preset defined on the [Material Editor window](material-tools.md) to [set the associated Material](material-tools.md#apply) on the selected object(s) or element(s).
+version https://git-lfs.github.com/spec/v1
+oid sha256:0c3850b69e87afddb5e9014acc64ae012a07aac9abcd08c9b51f3d825e35b901
+size 346

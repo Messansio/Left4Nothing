@@ -1,6 +1,3 @@
-# Prism
-A prism is a shape with two identical ends and flat sides. The basic ProBuilder prism is like a three-dimensional triangle, stretched along the z-axis.
-
-![Prism shapes](images/shape-tool_prism.png)
-
-The prism shape has no shape-specific properties.
+version https://git-lfs.github.com/spec/v1
+oid sha256:c6faeb4907e15a4d162b77d84bf728f5fc21194a56f409b03fcdf2d2b8535ce4
+size 256

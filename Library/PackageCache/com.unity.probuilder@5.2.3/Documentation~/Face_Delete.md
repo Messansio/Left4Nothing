@@ -1,7 +1,3 @@
-# ![Delete Faces icon](images/icons/Face_Delete.png) Delete Faces
-
-The __Delete Faces__ replace deletes the selected face(s).
-
-![Face on side of cube disappears](images/DeleteFace_Example.png)
-
-> **Tip:** You can also use this action with the **Backspace** shortcut (**Delete** key on macOS), or from the ProBuilder menu (**Tools** > **ProBuilder** > **Geometry** > **Delete Faces**). On Windows, the **Delete** key deletes the entire Mesh. You can use Undo to reverse it.
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5d6b586231ac5ab52fec7848918f57eb0649193e151b30a6688257c49aacf2d
+size 473
