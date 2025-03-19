@@ -380,6 +380,7 @@
 "Assets/game_direction.cs"
 "Assets/MoveCamera.cs"
 "Assets/PlayerCam.cs"
+"Assets/playerInteraction.cs"
 "Assets/PlayerMovement.cs"
 "Assets/weaponBehaviour.cs"
 -langversion:9.0

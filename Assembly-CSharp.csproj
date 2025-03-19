@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\weaponBehaviour.cs" />
+    <Compile Include="Assets\playerInteraction.cs" />
     <Compile Include="Assets\MoveCamera.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\game_direction.cs" />
