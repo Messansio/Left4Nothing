@@ -15,13 +15,23 @@ public class weaponBehaviour : MonoBehaviour
     public float fireDistance;
 
     [Header("Conditions")]
-    bool hasAmmo = true;
-
+    public bool hasAmmo = true;
+    
 
     [Header("Important")]
     public GameObject weaponTip;
     public GameObject playerOrientation;
     LayerMask hittableLayer;
+    RaycastHit hit;
+
+    [Header("Audio")]
+    public AudioClip gunshot;
+
+    private void Start()
+    {
+        ammo = maxAmmo;
+        hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
+    }
 
     IEnumerator WeaponReload()
     {
@@ -34,10 +44,10 @@ public class weaponBehaviour : MonoBehaviour
         Debug.Log("Reloaded Ammos");
     }
 
-    IEnumerator ShootingTimeForEachBullet()
+    void CheckForReload()
     {
         
-        if (ammo == 0)
+        if (ammo <= 0)
         {
             Debug.Log("Out of Ammo");
             hasAmmo = false;
@@ -46,48 +56,38 @@ public class weaponBehaviour : MonoBehaviour
         }
         else
         {
-            FixedUpdate();
-
-            yield return new WaitForSeconds(fireRate);
-            
             ammo = ammo - 1;
         }
 
     }
-    
 
+    //to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale it
+    private float nextTimeToFire; 
 
-    private void Start()
+    public void Shoot()
     {
-        ammo = maxAmmo;
-        hittableLayer = LayerMask.GetMask("watIsGround","CharacterMesh");
-    }
-
-    
-    
-    public void Shooting()
-    {
-        if (hasAmmo)
+        if (hasAmmo && Time.time >= nextTimeToFire)
         {
-            StartCoroutine(ShootingTimeForEachBullet());
-            
+            nextTimeToFire = Time.time + 1f / fireRate;
+
+            if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+            {
+                Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                
+            }
+            else
+            {
+                Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
+
+            }
+            gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
+            CheckForReload();
             Debug.Log(ammo);
         }
     }
 
-    void FixedUpdate()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
-        {
-            Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            
-            
-        }
-        else
-        {
-            Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
-            
-        }
-    }
+   
+
+    
+
 }

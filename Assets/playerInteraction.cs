@@ -19,9 +19,9 @@ public class playerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetMouseButton(0))
-            wb.Shooting();
+
+        if (Input.GetMouseButton(0) && wb.hasAmmo)
+            wb.Shoot();
 
     }
 }
