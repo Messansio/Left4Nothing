@@ -23,6 +23,7 @@ public class weaponBehaviour : MonoBehaviour
     public GameObject playerOrientation;
     LayerMask hittableLayer;
     RaycastHit hit;
+    private float nextTimeToFire; //created to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale the fire rate each shot
 
     [Header("Audio")]
     public AudioClip gunshot;
@@ -33,7 +34,7 @@ public class weaponBehaviour : MonoBehaviour
         hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
     }
 
-    IEnumerator WeaponReload()
+    public IEnumerator WeaponReload()
     {
         Debug.Log("Reloading..");
         yield return new WaitForSeconds(reloadTime);
@@ -61,8 +62,7 @@ public class weaponBehaviour : MonoBehaviour
 
     }
 
-    //to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale it
-    private float nextTimeToFire; 
+    
 
     public void Shoot()
     {

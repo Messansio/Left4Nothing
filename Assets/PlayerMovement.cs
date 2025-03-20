@@ -91,7 +91,6 @@ public class PlayerMovement : MonoBehaviour
           during a crouch.
         - crouchSpeedMultiplier lowers the movement speed
           while crouched.
-        - enableFlashlightDebugLogs toggles debug messages.
     */
     [Header("Tweaks")]
     public float crouchHeightMultiplier = 0.5f;
