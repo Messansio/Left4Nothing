@@ -91,7 +91,6 @@ public class PlayerMovement : MonoBehaviour
           during a crouch.
         - crouchSpeedMultiplier lowers the movement speed
           while crouched.
-        - enableFlashlightDebugLogs toggles debug messages.
     */
     [Header("Tweaks")]
     public float crouchHeightMultiplier = 0.5f;
@@ -181,12 +180,15 @@ public class PlayerMovement : MonoBehaviour
         if (!isCrouching && Input.GetKeyDown(crouchKey))
         {
             playerCollision.height *= crouchHeightMultiplier;
+
             isCrouching = true;
             moveSpeed = crouchSpeed;
         }
         else if (isCrouching && Input.GetKeyUp(crouchKey))
         {
+            
             playerCollision.height /= crouchHeightMultiplier;
+            
             isCrouching = false;
             moveSpeed = runningSpeed;
         }

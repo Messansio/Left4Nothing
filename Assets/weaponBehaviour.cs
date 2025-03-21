@@ -15,29 +15,46 @@ public class weaponBehaviour : MonoBehaviour
     public float fireDistance;
 
     [Header("Conditions")]
-    bool hasAmmo = true;
+    public bool hasAmmo = true;
+    public bool isNotReloading = true;
 
 
     [Header("Important")]
     public GameObject weaponTip;
     public GameObject playerOrientation;
     LayerMask hittableLayer;
+    RaycastHit hit;
+    private float nextTimeToFire; //created to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale the fire rate each shot
 
-    IEnumerator WeaponReload()
+    [Header("Audio")]
+    public AudioClip gunshot;
+    public AudioClip riflereload;
+
+    private void Start()
     {
+        ammo = maxAmmo;
+        hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
+    }
+    
+    public IEnumerator WeaponReload()
+    {
+        isNotReloading = false;
         Debug.Log("Reloading..");
+        hasAmmo = false;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(riflereload);
         yield return new WaitForSeconds(reloadTime);
         
         
         ammo = maxAmmo;
         hasAmmo = true;
         Debug.Log("Reloaded Ammos");
+        isNotReloading = true;
     }
 
-    IEnumerator ShootingTimeForEachBullet()
+    void CheckForReload()
     {
         
-        if (ammo == 0)
+        if (ammo <= 0)
         {
             Debug.Log("Out of Ammo");
             hasAmmo = false;
@@ -46,48 +63,37 @@ public class weaponBehaviour : MonoBehaviour
         }
         else
         {
-            FixedUpdate();
-
-            yield return new WaitForSeconds(fireRate);
-            
             ammo = ammo - 1;
         }
 
     }
+
     
 
-
-    private void Start()
+    public void Shoot()
     {
-        ammo = maxAmmo;
-        hittableLayer = LayerMask.GetMask("watIsGround","CharacterMesh");
-    }
-
-    
-    
-    public void Shooting()
-    {
-        if (hasAmmo)
+        if (hasAmmo && Time.time >= nextTimeToFire)
         {
-            StartCoroutine(ShootingTimeForEachBullet());
-            
+            nextTimeToFire = Time.time + 1f / fireRate;
+
+            if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+            {
+                Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                
+            }
+            else
+            {
+                Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
+
+            }
+            gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
+            CheckForReload();
             Debug.Log(ammo);
         }
     }
 
-    void FixedUpdate()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
-        {
-            Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            
-            
-        }
-        else
-        {
-            Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
-            
-        }
-    }
+   
+
+    
+
 }

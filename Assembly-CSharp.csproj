@@ -64,6 +64,7 @@
     <Compile Include="Assets\playerInteraction.cs" />
     <Compile Include="Assets\MoveCamera.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\EditorStuffDeleter.cs" />
     <Compile Include="Assets\game_direction.cs" />
     <Compile Include="Assets\PlayerCam.cs" />
     <Compile Include="Assets\flashlight.cs" />
