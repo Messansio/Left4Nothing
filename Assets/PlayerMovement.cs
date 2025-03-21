@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         else if (isCrouching && Input.GetKeyUp(crouchKey))
         {
             playerCollision.height /= crouchHeightMultiplier;
-            
+
             isCrouching = false;
             moveSpeed = isWalking ? walkSpeed : runningSpeed;  // Restore appropriate speed
         }
