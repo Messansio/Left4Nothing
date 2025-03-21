@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -30,6 +31,10 @@ public class weaponBehaviour : MonoBehaviour
     public AudioClip gunshot;
     public AudioClip riflereload;
 
+    public int getAmmo() {
+        return this.ammo;
+    }
+
     private void Start()
     {
         ammo = maxAmmo;
@@ -49,6 +54,19 @@ public class weaponBehaviour : MonoBehaviour
         hasAmmo = true;
         Debug.Log("Reloaded Ammos");
         isNotReloading = true;
+    }
+
+    public void TryReload()
+    {
+        // Only allow reload if we're not already reloading and ammo is less than max
+        if (isNotReloading && ammo < maxAmmo)
+        {
+            StartCoroutine(WeaponReload());
+        }
+        else if (ammo >= maxAmmo)
+        {
+            Debug.Log("Magazine already full!");
+        }
     }
 
     void CheckForReload()

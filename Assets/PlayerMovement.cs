@@ -22,85 +22,43 @@ using UnityEngine.Timeline;
 */
 public class PlayerMovement : MonoBehaviour
 {
-    #region Variables
+    #region Inspector Variables
 
-    /* 
-       [HEADER: Player Components]
-       -------------------------------------------------------
-       - playerCollision is the BoxCollider or CapsuleCollider
-         used for collision detection.
-       
-    */
-    [Header("Player Stuff")]
+    [Header("Player Components")]
     public CapsuleCollider playerCollision;
     
-
-    /*
-        [HEADER: Movement]
-        -------------------------------------------------------
-        - moveSpeed/runningSpeed/crouchSpeed: controls overall
-          walking, running, and crouch movement speed.
-        - isCrouching tracks current crouch state.
-        - groundDrag, jumpForce, jumpCooldown, airMultiplier: 
-          control physical properties influencing the player's
-          movement behavior.
-    */
-    [Header("Movement")]
+    [Header("Movement Settings")]
     public float moveSpeed;
     public float runningSpeed;
+    public float walkSpeed;  // New variable for walking speed
     public float crouchSpeed;
-
-    private bool isCrouching;
-    
-
     public float groundDrag;
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
 
-    /*
-        [HEADER: Keybinds]
-        -------------------------------------------------------
-        Defines default input keys for the player's jump, crouch,
-        and flashlight toggle. readyToJump ensures there is a delay
-        between jumps (controlled by jumpCooldown).
-    */
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode walkKey = KeyCode.LeftShift;  // New keybind for walking
     
-    private bool readyToJump;
-
-    /*
-        [HEADER: Ground Check]
-        -------------------------------------------------------
-        - playerHeight tracks the current height of the player's collider.
-        - whatIsGround sets the LayerMask for valid ground collisions.
-        - grounded indicates if the player is currently in contact
-          with the ground.
-    */
-    [Header("Ground Check")]
+    [Header("Ground & Crouch Settings")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    private bool grounded;
-
-    /*
-        [HEADER: Tweaks]
-        -------------------------------------------------------
-        - crouchHeightMultiplier scales the collider height
-          during a crouch.
-        - crouchSpeedMultiplier lowers the movement speed
-          while crouched.
-    */
-    [Header("Tweaks")]
     public float crouchHeightMultiplier = 0.5f;
     public float crouchSpeedMultiplier = 0.5f;
-    
 
-    // Reference to the camera orientation, typically parented under the player
+    [Header("Orientation")]
     public Transform orientation;
 
-    // Private variables to store input values and references
+    #endregion
+
+    #region Private Variables
+
+    private bool isCrouching;
+    private bool isWalking;  // New variable to track walking state
+    private bool readyToJump;
+    private bool grounded;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
@@ -108,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    #region Unity Lifecycle Methods
+    #region Unity Lifecycle
 
     /*
         Called once at startup. Assigns movement speeds, initializes
@@ -116,7 +74,9 @@ public class PlayerMovement : MonoBehaviour
     */
     private void Start()
     {
+        // Initialize movement speeds
         runningSpeed = moveSpeed;
+        walkSpeed = moveSpeed * 0.6f;  // Set walking speed to 60% of running speed
         crouchSpeed = moveSpeed * crouchSpeedMultiplier;
 
         rb = GetComponent<Rigidbody>();
@@ -124,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
         readyToJump = true;
         isCrouching = false;
+        isWalking = false;  // Initialize walking state
         
     }
 
@@ -137,8 +98,8 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        MyInput();
-        SpeedControl();
+        HandleInput();
+        ControlSpeed();
 
         rb.drag = grounded ? groundDrag : 0;
     }
@@ -154,13 +115,13 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    #region Input Handling
+    #region Input & Movement
 
     /*
         Captures primary user inputs for horizontal/vertical movement,
         jumping, flashlight toggling, and crouching.
     */
-    private void MyInput()
+    private void HandleInput()
     {
         // Get movement input
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -174,7 +135,20 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        
+        // Walk logic: reduce speed when shift is pressed
+        if (!isCrouching)
+        {
+            if (Input.GetKeyDown(walkKey))
+            {
+                isWalking = true;
+                moveSpeed = walkSpeed;
+            }
+            else if (Input.GetKeyUp(walkKey))
+            {
+                isWalking = false;
+                moveSpeed = runningSpeed;
+            }
+        }
 
         // Crouch logic: modifies collider height and reduces movement speed
         if (!isCrouching && Input.GetKeyDown(crouchKey))
@@ -183,23 +157,19 @@ public class PlayerMovement : MonoBehaviour
 
             isCrouching = true;
             moveSpeed = crouchSpeed;
+            isWalking = false;  // Cancel walking state when crouching
         }
         else if (isCrouching && Input.GetKeyUp(crouchKey))
         {
-            
             playerCollision.height /= crouchHeightMultiplier;
             
             isCrouching = false;
-            moveSpeed = runningSpeed;
+            moveSpeed = isWalking ? walkSpeed : runningSpeed;  // Restore appropriate speed
         }
 
         // Update stored playerHeight using the current collision height
         playerHeight = playerCollision.height;
     }
-
-    #endregion
-
-    #region Movement Methods
 
     /*
         Moves the player along X-Z plane based on input direction
@@ -216,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
         Caps the player's horizontal velocity to the current moveSpeed,
         preventing exploits or uncontrolled acceleration.
     */
-    private void SpeedControl()
+    private void ControlSpeed()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if(flatVel.magnitude > moveSpeed)
@@ -233,8 +203,8 @@ public class PlayerMovement : MonoBehaviour
     */
     private void Jump()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     /*
