@@ -25,7 +25,7 @@ public class playerInteraction : MonoBehaviour
 
         if (Input.GetMouseButton(0) && wb.hasAmmo)
             wb.Shoot();
-        if (Input.GetKeyDown(reloadKey))
+        if (Input.GetKeyDown(reloadKey) && wb.isNotReloading)
             StartCoroutine(wb.WeaponReload());
         if (Input.mouseScrollDelta.y > 0)
             Debug.Log("Scroll Up");

@@ -16,7 +16,8 @@ public class weaponBehaviour : MonoBehaviour
 
     [Header("Conditions")]
     public bool hasAmmo = true;
-    
+    public bool isNotReloading = true;
+
 
     [Header("Important")]
     public GameObject weaponTip;
@@ -27,22 +28,27 @@ public class weaponBehaviour : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip gunshot;
+    public AudioClip riflereload;
 
     private void Start()
     {
         ammo = maxAmmo;
         hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
     }
-
+    
     public IEnumerator WeaponReload()
     {
+        isNotReloading = false;
         Debug.Log("Reloading..");
+        hasAmmo = false;
+        gameObject.GetComponent<AudioSource>().PlayOneShot(riflereload);
         yield return new WaitForSeconds(reloadTime);
         
         
         ammo = maxAmmo;
         hasAmmo = true;
         Debug.Log("Reloaded Ammos");
+        isNotReloading = true;
     }
 
     void CheckForReload()

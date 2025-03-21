@@ -180,12 +180,15 @@ public class PlayerMovement : MonoBehaviour
         if (!isCrouching && Input.GetKeyDown(crouchKey))
         {
             playerCollision.height *= crouchHeightMultiplier;
+
             isCrouching = true;
             moveSpeed = crouchSpeed;
         }
         else if (isCrouching && Input.GetKeyUp(crouchKey))
         {
+            
             playerCollision.height /= crouchHeightMultiplier;
+            
             isCrouching = false;
             moveSpeed = runningSpeed;
         }
