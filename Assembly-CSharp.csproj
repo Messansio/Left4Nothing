@@ -63,8 +63,10 @@
     <Compile Include="Assets\weaponBehaviour.cs" />
     <Compile Include="Assets\Director\game_direction.cs" />
     <Compile Include="Assets\playerInteraction.cs" />
+    <Compile Include="Assets\zombie_class.cs" />
     <Compile Include="Assets\Director\Spawner.cs" />
     <Compile Include="Assets\MoveCamera.cs" />
+    <Compile Include="Assets\crosshair_class.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\EditorStuffDeleter.cs" />
     <Compile Include="Assets\PlayerCam.cs" />
