@@ -14,6 +14,7 @@ public class weaponBehaviour : MonoBehaviour
     public float reloadTime;
     public float fireRate;
     public float fireDistance;
+    public float damage;
 
     [Header("Conditions")]
     public bool hasAmmo = true;
@@ -26,6 +27,7 @@ public class weaponBehaviour : MonoBehaviour
     LayerMask hittableLayer;
     RaycastHit hit;
     private float nextTimeToFire; //created to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale the fire rate each shot
+    private zombie_class z;
 
     [Header("Audio")]
     public AudioClip gunshot;
@@ -37,6 +39,7 @@ public class weaponBehaviour : MonoBehaviour
 
     private void Start()
     {
+        damage = 30f;
         ammo = maxAmmo;
         hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
     }
@@ -86,7 +89,21 @@ public class weaponBehaviour : MonoBehaviour
 
     }
 
+    public bool hitZombie;
     
+
+    private IEnumerator checkIfShotZombie()
+    {
+        if (hit.collider.CompareTag("Enemy") == true)
+        {
+            hitZombie = true;
+            z = hit.transform.GetComponentInParent<zombie_class>();
+            z.takeDamage(damage);
+            yield return new WaitForSeconds(0.05f);
+            hitZombie = false;
+        }
+        
+    }
 
     public void Shoot()
     {
@@ -94,19 +111,22 @@ public class weaponBehaviour : MonoBehaviour
         {
             nextTimeToFire = Time.time + 1f / fireRate;
 
+            
             if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
             {
                 Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                
+                StartCoroutine(checkIfShotZombie());
             }
             else
             {
                 Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
 
             }
+            
             gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
+            
             CheckForReload();
-            Debug.Log(ammo);
+            //Debug.Log(ammo);
         }
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - https://github.com/Messansio/Left4Nothing
   - Weapon
+  - Enemy
   layers:
   - Default
   - TransparentFX
