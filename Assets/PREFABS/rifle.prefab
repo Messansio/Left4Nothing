@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 8183207967907321507}
   - component: {fileID: 4119850756317627653}
   - component: {fileID: 3190893497707444638}
-  - component: {fileID: 4194932564669450591}
   - component: {fileID: 8346335435893460086}
   m_Layer: 12
   m_Name: rifle
@@ -117,30 +116,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4194932564669450591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7273857356828219160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44db47ca72ac1414689875920b1a1863, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponName: rifle
-  weapon3DModel: {fileID: 919132149155446097, guid: 0e63824a84c96f949b71681f9cccd80c, type: 3}
-  maxAmmo: 35
-  reloadTime: 3
-  fireRate: 10
-  fireDistance: 1000
-  hasAmmo: 1
-  isNotReloading: 1
-  weaponTip: {fileID: 3548456619027500215}
-  playerOrientation: {fileID: 0}
-  gunshot: {fileID: 8300000, guid: 609c1970fe5b5c742aea605bb77eb29e, type: 3}
-  riflereload: {fileID: 8300000, guid: d16b3a0ede3bd8d439a059e8da9e29b7, type: 3}
 --- !u!82 &8346335435893460086
 AudioSource:
   m_ObjectHideFlags: 0
