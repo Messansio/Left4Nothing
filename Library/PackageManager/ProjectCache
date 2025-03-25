@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638782870095454722
+      ticks: 638784371423149472
     m_Hash: 714175129
   m_LockFileStatus:
     m_FilePath: C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638782870095511770
+      ticks: 638784371423173802
     m_Hash: 2998942076
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -4187,10 +4187,18 @@ m_ResolvedPackages:
   errors: []
   versions:
     all:
+    - 0.1.6-preview.2
+    - 1.0.0-preview.1
+    - 1.10.0-preview.1
+    - 1.10.1-preview.1
+    - 1.10.1
+    - 1.10.2
     - 1.11.4
+    - 1.11.5
     compatible:
     - 1.11.4
-    recommended: 1.11.4
+    - 1.11.5
+    recommended: 1.11.5
     deprecated: []
   dependencies: []
   resolvedDependencies: []
@@ -4205,7 +4213,7 @@ m_ResolvedPackages:
     configSource: 0
   hideInEditor: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 0
+  datePublishedTicks: 637852971930000000
   documentationUrl: 
   hasRepository: 1
   repository:
