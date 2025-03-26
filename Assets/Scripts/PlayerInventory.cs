@@ -19,6 +19,11 @@ public class PlayerInventory : MonoBehaviour
         return playerInvArray;
     }
 
+    public int Get_currentSelected()
+    {
+        return currentSelected;
+    }
+
     private void Awake()
     {
         primaryWeapon = GameObject.Find("primary_weapon");
@@ -26,10 +31,18 @@ public class PlayerInventory : MonoBehaviour
         grenade = GameObject.Find("grenade_item");
         aidItem = GameObject.Find("aid_item");
 
+        secondaryWeapon.SetActive(false);
+        grenade.SetActive(false);
+        aidItem.SetActive(false);
+
         playerInvArray = new GameObject[4] { primaryWeapon, secondaryWeapon, grenade, aidItem };
         inventoryUI = GameObject.Find("inventoryUI");
     }
 
+    private void Update()
+    {
+        
+    }
 
     public void EquipNextObj()
     {
@@ -44,8 +57,10 @@ public class PlayerInventory : MonoBehaviour
         playerInvArray[currentSelected].SetActive(true);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(true);
 
-        Debug.Log("Current Equipped Slot:\n" + (currentSelected + 1) + "\nObject:\n" + playerInvArray[currentSelected]);
-
+        if (playerInvArray[currentSelected].transform.childCount != 0)
+            Debug.Log("Current Equipped Slot:\n" + (currentSelected + 1) + "\nObject:\n" + playerInvArray[currentSelected].transform.GetChild(0).name);
+        else
+            Debug.Log("Current Equipped Slot:\n" + (currentSelected + 1) + "\nEMPTY");
     }
 
     public void EquipPrecedentObj()
@@ -61,7 +76,10 @@ public class PlayerInventory : MonoBehaviour
         playerInvArray[currentSelected].SetActive(true);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(true);
 
-        Debug.Log("Current Equipped Slot:\n" + (currentSelected + 1) + "\nObject:\n" + playerInvArray[currentSelected]);
+        if(playerInvArray[currentSelected].transform.childCount != 0)
+            Debug.Log("Current Equipped Slot:\n" + (currentSelected + 1) + "\nObject:\n" + playerInvArray[currentSelected].transform.GetChild(0).name);
+        else
+            Debug.Log("Current Equipped Slot:\n" + (currentSelected + 1) + "\nEMPTY");
 
     }
 

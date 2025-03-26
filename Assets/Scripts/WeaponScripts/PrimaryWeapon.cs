@@ -6,6 +6,9 @@ using UnityEngine.Rendering;
 
 public class PrimaryWeapon : MonoBehaviour
 {
+    [Header("Weapon Inputs")]
+    public KeyCode reloadKey = KeyCode.R;
+
     [Header("This Weapon Stats")]
     public string weaponName;
     public GameObject weapon3DModel;
@@ -43,7 +46,20 @@ public class PrimaryWeapon : MonoBehaviour
         ammo = maxAmmo;
         hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
     }
-    
+
+
+    private void Update()
+    {
+        if(gameObject.transform.parent != null && gameObject.transform.parent.name == "primary_weapon")
+        {
+            if (Input.GetMouseButton(0) && hasAmmo)
+                Shoot();
+            if (Input.GetKeyDown(reloadKey) && isNotReloading && getAmmo() < maxAmmo)
+                StartCoroutine(WeaponReload());
+        }
+        
+    }
+
     public IEnumerator WeaponReload()
     {
         isNotReloading = false;
