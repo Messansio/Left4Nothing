@@ -39,20 +39,25 @@ public class PlayerInventory : MonoBehaviour
         inventoryUI = GameObject.Find("inventoryUI");
     }
 
-    private void Update()
-    {
-        
-    }
 
     public void EquipNextObj()
     {
+        if (playerInvArray[currentSelected].transform.childCount != 0)
+            playerInvArray[currentSelected].transform.GetChild(0).GetComponent<PrimaryWeapon>().forceReload();
+
         playerInvArray[currentSelected].SetActive(false);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
         if (currentSelected == playerInvArray.Length - 1)
+        {
             currentSelected = 0;
+        }
         else
+        {
             currentSelected += 1;
+        }
+
+        //CancelReloadIfInactive();
 
         playerInvArray[currentSelected].SetActive(true);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(true);
@@ -65,13 +70,22 @@ public class PlayerInventory : MonoBehaviour
 
     public void EquipPrecedentObj()
     {
+        if (playerInvArray[currentSelected].transform.childCount != 0)
+            playerInvArray[currentSelected].transform.GetChild(0).GetComponent<PrimaryWeapon>().forceReload();
+
         playerInvArray[currentSelected].SetActive(false);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
         if (currentSelected == 0)
+        {
             currentSelected = playerInvArray.Length - 1;
+        }
         else
+        {
             currentSelected -= 1;
+        }
+
+        //CancelReloadIfInactive();
 
         playerInvArray[currentSelected].SetActive(true);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(true);

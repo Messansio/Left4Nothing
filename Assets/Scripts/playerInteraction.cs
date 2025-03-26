@@ -51,9 +51,12 @@ public class playerInteraction : MonoBehaviour
 
 
         if (Input.GetKeyDown(dropKey))
-            tds.DropCurrentObj();
+            if (invArray[pi.Get_currentSelected()].transform.childCount != 0)
+                tds.DropCurrentObj();
+
         if (Input.GetKeyDown(interactKey))
-            tds.TakeObj();
+            if(invArray[pi.Get_currentSelected()].transform.childCount == 0)
+                tds.TakeObj();
 
     }
 }

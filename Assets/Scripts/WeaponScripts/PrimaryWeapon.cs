@@ -40,6 +40,13 @@ public class PrimaryWeapon : MonoBehaviour
         return this.ammo;
     }
 
+    public void forceReload()
+    {
+        hasAmmo = true;
+        isNotReloading = true;
+
+    }
+
     private void Start()
     {
         damage = 30f;
@@ -123,8 +130,11 @@ public class PrimaryWeapon : MonoBehaviour
 
     public void Shoot()
     {
+        
         if (hasAmmo && Time.time >= nextTimeToFire)
         {
+            Debug.Log(ammo);
+
             nextTimeToFire = Time.time + 1f / fireRate;
 
             
@@ -140,14 +150,11 @@ public class PrimaryWeapon : MonoBehaviour
             }
             
             gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
-            
+
+
+
             CheckForReload();
-            //Debug.Log(ammo);
         }
     }
-
-   
-
-    
 
 }

@@ -18,7 +18,7 @@ public class Take_Drop_Stuff : MonoBehaviour
 
     private void Awake()
     {
-        collidingLayerMask = LayerMask.GetMask("Default");
+        collidingLayerMask = LayerMask.GetMask("whatIsPlayer");
         pi = gameObject.GetComponent<PlayerInventory>();
         p_camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
@@ -26,23 +26,17 @@ public class Take_Drop_Stuff : MonoBehaviour
     public void DropCurrentObj()
     {
         piArray = pi.Get_playerInvArray();
+        obj = piArray[pi.Get_currentSelected()].transform.GetChild(0).gameObject;
+        obj.transform.GetLocalPositionAndRotation(out weaponHolderPos, out weaponHolderRot);
 
-        if (piArray[pi.Get_currentSelected()].transform.childCount != 0)
-        {
-            obj = piArray[pi.Get_currentSelected()].transform.GetChild(0).gameObject;
-
-
-            obj.transform.GetLocalPositionAndRotation(out weaponHolderPos, out weaponHolderRot);
-            
-
-
-            obj.transform.SetParent(null);
-            obj.layer = 0;
-            objRb = obj.gameObject.AddComponent<Rigidbody>();
-            objRb.includeLayers = collidingLayerMask;
-            objRb.interpolation = RigidbodyInterpolation.Interpolate;
-            objRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        }
+        obj.transform.SetParent(null);
+        obj.layer = 0;
+        objRb = obj.gameObject.AddComponent<Rigidbody>();
+        objRb.includeLayers = collidingLayerMask;
+        objRb.interpolation = RigidbodyInterpolation.Interpolate;
+        objRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        ThrowObj(5f);
+        
 
     }
 
@@ -50,9 +44,9 @@ public class Take_Drop_Stuff : MonoBehaviour
     public void TakeObj()
     {
         RaycastHit hit;
-        if(Physics.Raycast(p_camera.position, p_camera.forward, out hit, 5f))
+        if(Physics.Raycast(p_camera.position, p_camera.forward, out hit, 5f, ~collidingLayerMask))
         {
-            Debug.DrawLine(p_camera.position, hit.point);
+
             Debug.Log(hit.collider.gameObject.tag);
             //check if weapon or item
             if(hit.collider.gameObject.tag == "Weapon")
@@ -66,6 +60,11 @@ public class Take_Drop_Stuff : MonoBehaviour
                 obj.transform.localRotation = weaponHolderRot;
             }
         }
+    }
+
+    private void ThrowObj(float force)
+    {
+        objRb.AddForce((p_camera.forward + p_camera.up) * force, ForceMode.Impulse);
     }
 
 }
