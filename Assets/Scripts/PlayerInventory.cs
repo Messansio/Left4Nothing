@@ -57,8 +57,6 @@ public class PlayerInventory : MonoBehaviour
             currentSelected += 1;
         }
 
-        //CancelReloadIfInactive();
-
         playerInvArray[currentSelected].SetActive(true);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(true);
 
@@ -84,8 +82,6 @@ public class PlayerInventory : MonoBehaviour
         {
             currentSelected -= 1;
         }
-
-        //CancelReloadIfInactive();
 
         playerInvArray[currentSelected].SetActive(true);
         inventoryUI.transform.GetChild(currentSelected).gameObject.transform.GetChild(0).gameObject.SetActive(true);

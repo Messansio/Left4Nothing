@@ -6,6 +6,9 @@ using UnityEngine.Rendering;
 
 public class SecondaryWeapon : MonoBehaviour
 {
+    [Header("Weapon Inputs")]
+    public KeyCode reloadKey = KeyCode.R;
+
     [Header("This Weapon Stats")]
     public string weaponName;
     public GameObject weapon3DModel;
@@ -19,15 +22,16 @@ public class SecondaryWeapon : MonoBehaviour
     [Header("Conditions")]
     public bool hasAmmo = true;
     public bool isNotReloading = true;
-
+    private bool resetReload = false;
 
     [Header("Important")]
-    public GameObject weaponTip;
-    public GameObject playerOrientation;
+    private GameObject weaponTip;
+    private GameObject playerOrientation;
     LayerMask hittableLayer;
     RaycastHit hit;
     private float nextTimeToFire; //created to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale the fire rate each shot
     private zombie_class z;
+    private Shooting_Trail st;
 
     [Header("Audio")]
     public AudioClip gunshot;
@@ -37,13 +41,47 @@ public class SecondaryWeapon : MonoBehaviour
         return this.ammo;
     }
 
+    public void forceReload()
+    {
+        hasAmmo = true;
+        isNotReloading = true;
+
+        if(ammo <= 0)
+            resetReload = true;
+
+    }
+
     private void Start()
     {
-        damage = 30f;
+
+        playerOrientation = GameObject.FindGameObjectWithTag("MainCamera");
         ammo = maxAmmo;
         hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
+        weaponTip = gameObject.transform.Find("w_tip").gameObject;
+        st = weaponTip.GetComponent<Shooting_Trail>();
+
     }
-    
+
+
+    private void Update()
+    {
+        if(gameObject.transform.parent != null && gameObject.transform.parent.name == "primary_weapon")
+        {
+            
+            if (Input.GetMouseButtonDown(0) && hasAmmo)
+                Shoot();
+            if (Input.GetKeyDown(reloadKey) && isNotReloading && getAmmo() < maxAmmo)
+                StartCoroutine(WeaponReload());
+            if (resetReload) {
+                StartCoroutine(WeaponReload());
+                resetReload = false;
+            }
+                
+
+        }
+
+    }
+
     public IEnumerator WeaponReload()
     {
         isNotReloading = false;
@@ -107,31 +145,37 @@ public class SecondaryWeapon : MonoBehaviour
 
     public void Shoot()
     {
+        
         if (hasAmmo && Time.time >= nextTimeToFire)
         {
-            nextTimeToFire = Time.time + 1f / fireRate;
-
             
-            if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+            if (!resetReload)
             {
-                Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                StartCoroutine(checkIfShotZombie());
-            }
-            else
-            {
-                Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
+                nextTimeToFire = Time.time + 1f / fireRate;
+
+
+                if (Physics.Raycast(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+                {
+                    Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                    StartCoroutine(checkIfShotZombie());
+                }
+                else
+                {
+                    Debug.DrawRay(weaponTip.transform.position, playerOrientation.transform.TransformDirection(Vector3.forward) * fireDistance, Color.red);
+
+                }
+
+                //StartCoroutine(st.CreateTrail(weaponTip.transform.position, hit, 0.2f));
+
+                gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
 
             }
             
-            gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
-            
+
             CheckForReload();
-            //Debug.Log(ammo);
         }
     }
 
-   
-
-    
 
 }
+

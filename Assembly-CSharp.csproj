@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\EditorStuffDeleter.cs" />
     <Compile Include="Assets\Director\game_direction.cs" />
+    <Compile Include="Assets\Scripts\ShootingTrail.cs" />
     <Compile Include="Assets\Director\Spawner.cs" />
     <Compile Include="Assets\Scripts\flashlight.cs" />
     <Compile Include="Assets\Scripts\PlayerInventory.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Scripts\playerInteraction.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Equip_Drop_Stuff.cs" />
+    <Compile Include="Assets\Scripts\SinglePlayer.cs" />
     <Compile Include="Assets\Scripts\PlayerCam.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\SecondaryWeapon.cs" />
   </ItemGroup>

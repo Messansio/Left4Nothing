@@ -26,7 +26,8 @@ public class Take_Drop_Stuff : MonoBehaviour
     public void DropCurrentObj()
     {
         piArray = pi.Get_playerInvArray();
-        obj = piArray[pi.Get_currentSelected()].transform.GetChild(0).gameObject;
+        
+        UpdateObject();
         obj.transform.GetLocalPositionAndRotation(out weaponHolderPos, out weaponHolderRot);
 
         obj.transform.SetParent(null);
@@ -40,7 +41,13 @@ public class Take_Drop_Stuff : MonoBehaviour
 
     }
 
-    
+    private void UpdateObject()
+    {
+        obj = piArray[pi.Get_currentSelected()].transform.GetChild(0).gameObject;
+        
+
+    }
+
     public void TakeObj()
     {
         RaycastHit hit;
@@ -51,10 +58,13 @@ public class Take_Drop_Stuff : MonoBehaviour
             //check if weapon or item
             if(hit.collider.gameObject.tag == "Weapon")
             {
-
+                //if(hit.transform.)
                 hit.transform.SetParent(GameObject.Find("primary_weapon").transform);
+                UpdateObject();
                 obj.layer = 12;
                 Destroy(obj.GetComponent<Rigidbody>());
+
+                
 
                 obj.transform.localPosition = weaponHolderPos;
                 obj.transform.localRotation = weaponHolderRot;

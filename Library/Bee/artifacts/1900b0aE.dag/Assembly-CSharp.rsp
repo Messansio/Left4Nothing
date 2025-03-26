@@ -398,6 +398,8 @@
 "Assets/Scripts/playerInteraction.cs"
 "Assets/Scripts/PlayerInventory.cs"
 "Assets/Scripts/PlayerMovement.cs"
+"Assets/Scripts/ShootingTrail.cs"
+"Assets/Scripts/SinglePlayer.cs"
 "Assets/Scripts/WeaponScripts/PrimaryWeapon.cs"
 "Assets/Scripts/WeaponScripts/SecondaryWeapon.cs"
 -langversion:9.0
