@@ -8,6 +8,7 @@ TagManager:
   - Weapon
   - Enemy
   - Teammate
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -16,14 +17,14 @@ TagManager:
   - Water
   - UI
   - Water
-  - UI
+  - Interactable
   - whatIsPlayer
   - whatIsWall
   - watIsGround
   - notWalkable
   - firstPersonWeapon
   - 
-  - whatIsKnife
+  - 
   - 
   - 
   - 

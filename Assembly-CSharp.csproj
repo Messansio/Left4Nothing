@@ -62,19 +62,22 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\EditorStuffDeleter.cs" />
     <Compile Include="Assets\Director\game_direction.cs" />
+    <Compile Include="Assets\Scripts\Interactables\flashlight.cs" />
     <Compile Include="Assets\Director\Spawner.cs" />
-    <Compile Include="Assets\Scripts\flashlight.cs" />
-    <Compile Include="Assets\Scripts\PlayerInventory.cs" />
-    <Compile Include="Assets\Scripts\Teammate_AI.cs" />
-    <Compile Include="Assets\Scripts\MoveCamera.cs" />
-    <Compile Include="Assets\Scripts\crosshair_class.cs" />
+    <Compile Include="Assets\Scripts\Ai\Teammate_AI.cs" />
+    <Compile Include="Assets\Scripts\UI\crosshair_class.cs" />
+    <Compile Include="Assets\Scripts\Player\MoveCamera.cs" />
+    <Compile Include="Assets\Scripts\Ai\zombie_class.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Trigger_Saferoom.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\PrimaryWeapon.cs" />
-    <Compile Include="Assets\Scripts\playerInteraction.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\Equip_Drop_Stuff.cs" />
-    <Compile Include="Assets\Scripts\PlayerCam.cs" />
-    <Compile Include="Assets\Scripts\zombie_class.cs" />
-    <Compile Include="Assets\Scripts\WeaponScripts\SecondaryWeapon.cs" />
+    <Compile Include="Assets\Scripts\Player\playerInteraction.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerCam.cs" />
+    <Compile Include="Assets\Scripts\SinglePlayer.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\ShootingTrail.cs" />
+    <Compile Include="Assets\Door.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Equip_Drop_Stuff.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
