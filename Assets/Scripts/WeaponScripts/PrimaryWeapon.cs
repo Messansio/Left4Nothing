@@ -32,6 +32,7 @@ public class PrimaryWeapon : MonoBehaviour
     private float nextTimeToFire; //created to avoid using the "fireRate" as the "Time.time + 1f/fireRate" container or else it will scale the fire rate each shot
     private zombie_class z;
     private Shooting_Trail st;
+    private PlayerMovement pMov;
 
     [Header("Audio")]
     public AudioClip gunshot;
@@ -53,14 +54,14 @@ public class PrimaryWeapon : MonoBehaviour
 
     private void Start()
     {
-
+        pMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerOrientation = GameObject.FindGameObjectWithTag("MainCamera");
         damage = 30f;
         ammo = maxAmmo;
         hittableLayer = LayerMask.GetMask("watIsGround", "CharacterMesh");
         weaponTip = gameObject.transform.Find("w_tip").gameObject;
         st = weaponTip.GetComponent<Shooting_Trail>();
-
+        
     }
 
 
@@ -69,15 +70,21 @@ public class PrimaryWeapon : MonoBehaviour
         if(gameObject.transform.parent != null && gameObject.transform.parent.name == "primary_weapon")
         {
             
+            PlayMovingRifleAnimation();
+            
             if (Input.GetMouseButton(0) && hasAmmo)
+            {
+                PlayShootingRifleAnimation();
                 Shoot();
+                
+            }
+                
             if (Input.GetKeyDown(reloadKey) && isNotReloading && getAmmo() < maxAmmo)
                 StartCoroutine(WeaponReload());
             if (resetReload) {
                 StartCoroutine(WeaponReload());
                 resetReload = false;
             }
-                
 
         }
 
@@ -169,7 +176,7 @@ public class PrimaryWeapon : MonoBehaviour
                 //StartCoroutine(st.CreateTrail(weaponTip.transform.position, hit, 0.2f));
 
                 gameObject.GetComponent<AudioSource>().PlayOneShot(gunshot);
-
+                gameObject.GetComponent<Animator>().SetBool("IsHolderShooting", false);
             }
             
 
@@ -178,5 +185,24 @@ public class PrimaryWeapon : MonoBehaviour
     }
 
 
+    private void PlayMovingRifleAnimation()
+    {
+        if (pMov.isPlayerMoving)
+        {
+            gameObject.GetComponent<Animator>().SetBool("IsHolderMoving", true);
+        }
+        else
+            gameObject.GetComponent<Animator>().SetBool("IsHolderMoving", false);
+
+        if (pMov.GetIsCrouching())
+            gameObject.GetComponent<Animator>().SetLayerWeight(2, 0.2f);
+        else
+            gameObject.GetComponent<Animator>().SetLayerWeight(2, 1);
+    }
+
+    private void PlayShootingRifleAnimation()
+    {
+        gameObject.GetComponent<Animator>().SetBool("IsHolderShooting", true);
+    }
 }
 

@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    #region Private Variables
+    #region Variables
 
     private bool isCrouching;
     private bool isWalking;  // New variable to track walking state
@@ -63,6 +63,12 @@ public class PlayerMovement : MonoBehaviour
     private float verticalInput;
     private Vector3 moveDirection;
     private Rigidbody rb;
+    public bool isPlayerMoving;
+
+    public bool GetIsCrouching()
+    {
+        return isCrouching;
+    }
 
     #endregion
 
@@ -85,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
         isCrouching = false;
         isWalking = false;  // Initialize walking state
-        
+        isPlayerMoving = false;
     }
 
     /*
@@ -115,6 +121,8 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    
+
     #region Input & Movement
 
     /*
@@ -127,9 +135,19 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        #region Check for Animation Input
+
+        if (horizontalInput != 0 || verticalInput != 0)
+            isPlayerMoving = true;
+        else
+            isPlayerMoving = false;
+
+        #endregion
+
         // Jump logic: checks for key press, readyToJump state, and ground contact
-        if(Input.GetKeyDown(jumpKey) && readyToJump && grounded)
+        if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
+
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);

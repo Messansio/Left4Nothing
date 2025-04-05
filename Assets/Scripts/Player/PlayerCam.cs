@@ -7,6 +7,7 @@ public class PlayerCam : MonoBehaviour
     public float sensX;
     public float sensY;
 
+    private PlayerMovement pMov;
     public Transform orientation;
 
     float xRotation;
@@ -16,7 +17,10 @@ public class PlayerCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        pMov = orientation.parent.GetComponent<PlayerMovement>();
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -30,5 +34,10 @@ public class PlayerCam : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+
+        if (pMov.isPlayerMoving)
+            gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", true);
+        else
+            gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", false);
     }
 }

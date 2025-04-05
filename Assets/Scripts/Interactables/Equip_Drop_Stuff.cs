@@ -62,11 +62,10 @@ public class Take_Drop_Stuff : MonoBehaviour
                 UpdateObject();
                 obj.layer = 12;
                 Destroy(obj.GetComponent<Rigidbody>());
-
                 
-
                 obj.transform.localPosition = weaponHolderPos;
                 obj.transform.localRotation = weaponHolderRot;
+
             }
         }
     }
