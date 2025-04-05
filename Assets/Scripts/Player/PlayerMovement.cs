@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     #region Variables
 
     private bool isCrouching;
-    private bool isWalking;  // New variable to track walking state
+    public bool isWalking;  // New variable to track walking state
     private bool readyToJump;
     private bool grounded;
     private float horizontalInput;
@@ -70,6 +70,10 @@ public class PlayerMovement : MonoBehaviour
         return isCrouching;
     }
 
+    public bool GetIsGrounded()
+    {
+        return grounded;
+    }
     #endregion
 
     #region Unity Lifecycle
@@ -149,6 +153,7 @@ public class PlayerMovement : MonoBehaviour
         {
 
             readyToJump = false;
+            
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }

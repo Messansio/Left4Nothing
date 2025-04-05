@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Take_Drop_Stuff : MonoBehaviour
@@ -32,7 +33,8 @@ public class Take_Drop_Stuff : MonoBehaviour
 
         obj.transform.SetParent(null);
         obj.layer = 0;
-        objRb = obj.gameObject.AddComponent<Rigidbody>();
+        objRb = obj.AddComponent<Rigidbody>();
+        Destroy(obj.GetComponent<Animator>());
         objRb.includeLayers = collidingLayerMask;
         objRb.interpolation = RigidbodyInterpolation.Interpolate;
         objRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -48,6 +50,8 @@ public class Take_Drop_Stuff : MonoBehaviour
 
     }
 
+    public AnimatorController pw_rifle_animCTRL;
+
     public void TakeObj()
     {
         RaycastHit hit;
@@ -55,7 +59,7 @@ public class Take_Drop_Stuff : MonoBehaviour
         {
 
             //check if weapon or item
-            if(hit.collider.gameObject.tag == "Weapon")
+            if(hit.collider.gameObject.CompareTag("Weapon"))
             {
                 //if(hit.transform.)
                 hit.transform.SetParent(GameObject.Find("primary_weapon").transform);
@@ -63,9 +67,10 @@ public class Take_Drop_Stuff : MonoBehaviour
                 obj.layer = 12;
                 Destroy(obj.GetComponent<Rigidbody>());
                 
-                obj.transform.localPosition = weaponHolderPos;
-                obj.transform.localRotation = weaponHolderRot;
+                obj.transform.SetLocalPositionAndRotation(weaponHolderPos, weaponHolderRot);
 
+                obj.AddComponent<Animator>();
+                obj.GetComponent<Animator>().runtimeAnimatorController = pw_rifle_animCTRL;
             }
         }
     }

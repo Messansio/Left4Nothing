@@ -188,16 +188,19 @@ public class PrimaryWeapon : MonoBehaviour
     private void PlayMovingRifleAnimation()
     {
         if (pMov.isPlayerMoving)
-        {
             gameObject.GetComponent<Animator>().SetBool("IsHolderMoving", true);
-        }
         else
             gameObject.GetComponent<Animator>().SetBool("IsHolderMoving", false);
 
-        if (pMov.GetIsCrouching())
-            gameObject.GetComponent<Animator>().SetLayerWeight(2, 0.2f);
+        if (pMov.GetIsCrouching() || pMov.isWalking)
+            gameObject.GetComponent<Animator>().SetLayerWeight(2, 0.05f);
         else
             gameObject.GetComponent<Animator>().SetLayerWeight(2, 1);
+
+        if (!pMov.GetIsGrounded())
+            gameObject.GetComponent<Animator>().SetBool("HasHolderJumped", true);
+        else
+            gameObject.GetComponent<Animator>().SetBool("HasHolderJumped", false);
     }
 
     private void PlayShootingRifleAnimation()

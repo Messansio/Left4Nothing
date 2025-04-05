@@ -39,5 +39,10 @@ public class PlayerCam : MonoBehaviour
             gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", true);
         else
             gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", false);
+        if (pMov.GetIsCrouching() || pMov.isWalking)
+            gameObject.GetComponent<Animator>().SetLayerWeight(1, 0);
+        else
+            gameObject.GetComponent<Animator>().SetLayerWeight(1, 1f);
+
     }
 }
