@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class zombie_class : MonoBehaviour
 {
+    [Header("Zombie Type")]
+    public bool isBoss = false;
+    public bool isCommon = true;    //Common by default with 100 hp
+
     [Header("Zombie Stats")]
     private float health = 100;
     public AudioClip zDeath;
+
+    private void Awake()
+    {
+        if(isBoss)
+            health = 800;
+
+    }
 
     public void takeDamage(float incomingDamage)
     {

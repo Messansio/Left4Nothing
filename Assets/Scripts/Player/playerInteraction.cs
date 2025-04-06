@@ -73,9 +73,12 @@ public class playerInteraction : MonoBehaviour
                 if (hit.transform.tag == "Interactable")
                 {
                     Debug.Log(hit.transform.tag);
-                    hit.transform.parent.GetComponent<Door>().hasPlayerInteracted = true;
-                    hit.transform.parent.GetComponent<Door>().PlayDoorSound();
-
+                    if(hit.transform.parent.name == "DoorPivot")
+                    {
+                        hit.transform.parent.GetComponent<Door>().PlayOpenDoorSound();
+                        hit.transform.parent.GetComponent<Door>().hasPlayerInteracted = true;
+                    }
+                    
 
                 }
                     
