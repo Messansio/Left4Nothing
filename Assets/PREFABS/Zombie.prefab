@@ -201,7 +201,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!195 &5431826027998932762
 NavMeshAgent:
@@ -213,8 +213,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 5
+  m_Speed: 7
+  m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1
@@ -237,6 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8cd2a09dcc7204bacfed47d0cad836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
+  isCommon: 1
   zDeath: {fileID: 8300000, guid: 2f9614d7926a5bb46b982b6ccbff9fff, type: 3}
 --- !u!82 &-2165728765510762749
 AudioSource:

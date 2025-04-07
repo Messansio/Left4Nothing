@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ZAI_Manual : MonoBehaviour
@@ -25,9 +26,30 @@ public class ZAI_Manual : MonoBehaviour
         Roam();
     }
 
-    private float maxZombieVisualRange;
+    private float zombieVisualRange = 20f;
+    private float zombieDistanceToTargetSurvivor;
+    private Vector3 closestSurvivorPos;
+
+    private Vector3 GetClosestSurvivorPos()
+    {
+        var survivorsArray = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (var survivor in survivorsArray)
+        {
+            Vector3 survivorPos = survivor.transform.position;
+            zombieDistanceToTargetSurvivor = Vector3.Distance(transform.position, survivorPos);
+
+            if (zombieDistanceToTargetSurvivor <= zombieVisualRange )
+                closestSurvivorPos = survivorPos;
+        }
+
+        return closestSurvivorPos;
+        
+    }
+
     private bool SeePlayer()   //check if the zombie saw the player
     {
+        
         /*if( distance between player and zombie is less equal to maxZombieVisualRange )
             sawPlayer = true;
           else
