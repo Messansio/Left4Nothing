@@ -140,7 +140,7 @@ public class PrimaryWeapon : MonoBehaviour
 
     private IEnumerator checkIfShotZombie()
     {
-        if (hit.collider.CompareTag("Enemy") == true)
+        if (hit.collider.CompareTag("Enemy") == true && !hit.transform.GetComponent<zombie_class>().isZombieDead)
         {
             hitZombie = true;
             z = hit.transform.GetComponentInParent<zombie_class>();
