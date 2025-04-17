@@ -10,7 +10,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.Burst.CompilerServices;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.Timeline;
 
 /*
@@ -36,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    public float maxSlopeDegree = 40;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -91,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        
+        //playerRoot = transform.Find("PlayerRoot");
+        //halfBoxDim = new Vector3(0.5f, 0.1f, 0.5f);
 
         readyToJump = true;
         isCrouching = false;
@@ -106,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
     */
     private void Update()
     {
+
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         HandleInput();
@@ -200,9 +209,18 @@ public class PlayerMovement : MonoBehaviour
     */
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        IsPlayerOnSlope();
+
+        if (isOnWalkableSlope)
+        {
+            moveDirection = Vector3.Cross(groundCollision.normal, -orientation.right * verticalInput) + Vector3.Cross(groundCollision.normal, orientation.forward * horizontalInput);
+        }
+        else
+            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
         float force = moveSpeed * 10f * (grounded ? 1f : airMultiplier);
         rb.AddForce(moveDirection.normalized * force, ForceMode.Force);
+
     }
 
     /*
@@ -240,4 +258,51 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion
+
+    
+    private RaycastHit groundCollision;
+    private float currentSlopeAngle;
+    private bool isOnWalkableSlope = false;
+
+    private void IsPlayerOnSlope()
+    {
+        Physics.Raycast(gameObject.transform.position, Vector3.down, out groundCollision);
+        currentSlopeAngle = Vector3.Angle(Vector3.up, groundCollision.normal);
+        //Debug.Log(currentSlopeAngle);
+        //Debug.Log(isOnWalkableSlope);
+        if (currentSlopeAngle != 0 && currentSlopeAngle <= maxSlopeDegree)
+            isOnWalkableSlope = true;
+        else
+            isOnWalkableSlope = false;
+    }
+    /*
+    private Vector3 collidingStepDirection;
+    private float defCollidingStepDistance;
+    private float maxStepHeight;
+    private Vector3 raycastStartPos;
+
+    private Transform playerRoot;
+
+    private Vector3 halfBoxDim;
+
+    RaycastHit castInfo;
+
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        maxStepHeight = 0.7f;
+        defCollidingStepDistance = 0.05f;
+
+        raycastStartPos.Set(playerRoot.position.x, playerRoot.position.y + maxStepHeight, playerRoot.position.z);
+
+        if(Physics.BoxCast(playerRoot.position, halfBoxDim, Vector3.down, out castInfo))
+        {
+            Debug.Log("Found an Obstacle: " + castInfo.collider);
+        }
+        
+
+    }
+    */
+
 }

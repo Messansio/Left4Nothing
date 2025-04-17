@@ -169,6 +169,7 @@ Transform:
   - {fileID: 7353020173354849443}
   - {fileID: 8058074341890163873}
   - {fileID: 8704711175065826181}
+  - {fileID: 1331817582008628569}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7020825183324227257
@@ -263,6 +264,7 @@ MonoBehaviour:
   jumpForce: 460
   jumpCooldown: 0.25
   airMultiplier: 0.07
+  maxSlopeDegree: 40
   jumpKey: 32
   crouchKey: 306
   walkKey: 304
@@ -273,6 +275,8 @@ MonoBehaviour:
   crouchHeightMultiplier: 0.5
   crouchSpeedMultiplier: 0.5
   orientation: {fileID: 8704711175065826181}
+  isWalking: 0
+  isPlayerMoving: 0
 --- !u!114 &3687594636717120694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +322,37 @@ MonoBehaviour:
   playerFlashlight: {fileID: 0}
   enableFlashlightDebugLogs: 1
   flashlightKey: 102
+--- !u!1 &2538447586699650637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1331817582008628569}
+  m_Layer: 8
+  m_Name: PlayerRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1331817582008628569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2538447586699650637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1995530067694731046}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7846047794860780264
 GameObject:
   m_ObjectHideFlags: 0
