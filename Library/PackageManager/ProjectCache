@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638784371423149472
-    m_Hash: 714175129
+      ticks: 638802267065049539
+    m_Hash: 2281757959
   m_LockFileStatus:
     m_FilePath: C:/Users/panuc/OneDrive/Documents/GitHub/Left4Nothing/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638784371423173802
-    m_Hash: 2998942076
+      ticks: 638802267065161642
+    m_Hash: 2559177005
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -59,6 +59,7 @@ m_ResolvedPackages:
     - 2.0.4
     - 2.0.5
     - 2.0.6
+    - 2.0.7
     compatible:
     - 1.1.5
     recommended: 1.1.5
@@ -406,6 +407,7 @@ m_ResolvedPackages:
     - 2.0.0
     - 2.1.1
     - 2.2.0
+    - 2.3.0
     compatible:
     - 1.9.1
     - 1.10.0
@@ -460,6 +462,87 @@ m_ResolvedPackages:
     path: 
   unityLifecycle:
     version: 1.9.1
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+  isDeprecated: 0
+  deprecationMessage: 
+  fingerprint: 
+- packageId: com.unity.polybrush@1.1.8
+  testable: 0
+  isDirectDependency: 1
+  version: 1.1.8
+  source: 1
+  resolvedPath: C:\Users\panuc\OneDrive\Documents\GitHub\Left4Nothing\Library\PackageCache\com.unity.polybrush@1.1.8
+  assetPath: Packages/com.unity.polybrush
+  name: com.unity.polybrush
+  displayName: Polybrush
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: assets
+  description: Mesh painting, sculpting, and geo-scattering tool for Unity.
+  status: 0
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.13
+    - 1.0.0-preview.16
+    - 1.0.0-preview.17
+    - 1.0.0
+    - 1.0.1-preview.1
+    - 1.0.1-preview.2
+    - 1.0.1
+    - 1.0.2-preview.1
+    - 1.0.2-preview.4
+    - 1.0.2
+    - 1.1.0-pre.1
+    - 1.1.2
+    - 1.1.3
+    - 1.1.4
+    - 1.1.5
+    - 1.1.6
+    - 1.1.8
+    compatible:
+    - 1.1.6
+    - 1.1.8
+    recommended: 1.1.8
+    deprecated: []
+  dependencies:
+  - name: com.unity.settings-manager
+    version: 2.0.1
+  resolvedDependencies:
+  - name: com.unity.settings-manager
+    version: 2.0.1
+  keywords:
+  - modeling
+  - sculpting
+  - push
+  - clay
+  - terrain
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+  hideInEditor: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638567250100000000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.polybrush@1.1/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/Unity-Technologies/polybrush.git
+    revision: 571b9c3665597c648dbe7c7dc7688804260a8ec0
+    path: 
+  unityLifecycle:
+    version: 1.1.6
     nextVersion: 
     recommendedVersion: 
     isDeprecated: 0
@@ -3477,6 +3560,8 @@ m_ResolvedPackages:
     - 1.8.17
     - 1.8.18
     - 1.8.19
+    - 1.8.20
+    - 1.8.21
     compatible:
     - 1.8.13
     - 1.8.14
@@ -3485,7 +3570,9 @@ m_ResolvedPackages:
     - 1.8.17
     - 1.8.18
     - 1.8.19
-    recommended: 1.8.19
+    - 1.8.20
+    - 1.8.21
+    recommended: 1.8.21
     deprecated: []
   dependencies:
   - name: com.unity.mathematics
@@ -3980,8 +4067,10 @@ m_ResolvedPackages:
     - 1.0.3
     - 2.0.0
     - 2.0.1
+    - 2.1.0
     compatible:
     - 2.0.1
+    - 2.1.0
     recommended: 2.0.1
     deprecated: []
   dependencies: []
@@ -4088,6 +4177,7 @@ m_ResolvedPackages:
     - 2.3.0
     - 2.4.0
     - 2.5.0
+    - 2.5.1
     compatible:
     - 1.4.1
     - 1.5.0
@@ -4107,7 +4197,8 @@ m_ResolvedPackages:
     - 2.3.0
     - 2.4.0
     - 2.5.0
-    recommended: 2.5.0
+    - 2.5.1
+    recommended: 2.5.1
     deprecated: []
   dependencies:
   - name: com.unity.burst
@@ -4276,9 +4367,11 @@ m_ResolvedPackages:
     - 2.0.20
     - 2.0.21
     - 2.0.22
+    - 2.0.23
     compatible:
     - 2.0.22
-    recommended: 2.0.22
+    - 2.0.23
+    recommended: 2.0.23
     deprecated: []
   dependencies:
   - name: com.unity.test-framework
@@ -4387,12 +4480,14 @@ m_ResolvedPackages:
     - 3.0.31
     - 3.0.34
     - 3.0.35
+    - 3.0.36
     compatible:
     - 3.0.28
     - 3.0.31
     - 3.0.34
     - 3.0.35
-    recommended: 3.0.35
+    - 3.0.36
+    recommended: 3.0.36
     deprecated: []
   dependencies:
   - name: com.unity.ext.nunit
@@ -5032,6 +5127,7 @@ m_ResolvedPackages:
     - 1.3.1
     - 1.4.0
     - 1.5.1
+    - 1.5.2
     - 2.1.0-exp.4
     - 2.1.0-pre.2
     - 2.1.0-pre.6
@@ -5061,6 +5157,7 @@ m_ResolvedPackages:
     - 1.3.1
     - 1.4.0
     - 1.5.1
+    - 1.5.2
     - 2.1.0-exp.4
     - 2.1.0-pre.2
     - 2.1.0-pre.6
