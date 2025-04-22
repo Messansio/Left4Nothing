@@ -66,9 +66,11 @@
     <Compile Include="Assets\Director\Spawner.cs" />
     <Compile Include="Assets\Scripts\Ai\z_boss_class.cs" />
     <Compile Include="Assets\Director\SinglePlayer.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Trigger_Climbable.cs" />
     <Compile Include="Assets\Scripts\Ai\Teammate_AI.cs" />
     <Compile Include="Assets\Scripts\UI\crosshair_class.cs" />
     <Compile Include="Assets\Scripts\Ai\ZAI_Pathfind_Conditions.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerClimbing.cs" />
     <Compile Include="Assets\Scripts\Player\MoveCamera.cs" />
     <Compile Include="Assets\Scripts\Ai\zombie_class.cs" />
     <Compile Include="Assets\Scripts\Interactables\Trigger_Saferoom.cs" />

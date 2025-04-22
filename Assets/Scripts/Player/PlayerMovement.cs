@@ -12,6 +12,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Burst.CompilerServices;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
@@ -60,25 +62,21 @@ public class PlayerMovement : MonoBehaviour
 
     #region Variables
 
+    public bool changeToClimbingMovement;
     private bool isCrouching;
     public bool isWalking;  // New variable to track walking state
     private bool readyToJump;
     private bool grounded;
-    private float horizontalInput;
-    private float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
     private Vector3 moveDirection;
     private Rigidbody rb;
     public bool isPlayerMoving;
 
-    public bool GetIsCrouching()
-    {
-        return isCrouching;
-    }
 
-    public bool GetIsGrounded()
-    {
-        return grounded;
-    }
+    public bool GetIsCrouching() { return isCrouching; }
+    public bool GetIsGrounded() { return grounded; }
+    public bool SetIsGrounded(bool y) { return grounded = y; }
     #endregion
 
     #region Unity Lifecycle
@@ -114,13 +112,19 @@ public class PlayerMovement : MonoBehaviour
     */
     private void Update()
     {
+        // Get movement input
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        if (!changeToClimbingMovement)  //if not climbing player has those movement inputs and methods
+        {
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f); //removed parameter whatIsGround
 
-        HandleInput();
-        ControlSpeed();
+            HandleInput();
+            ControlSpeed();
 
-        rb.drag = grounded ? groundDrag : 0;
+            rb.drag = grounded ? groundDrag : 0;
+        }
     }
 
     /*
@@ -144,9 +148,7 @@ public class PlayerMovement : MonoBehaviour
     */
     private void HandleInput()
     {
-        // Get movement input
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        
 
         #region Check for Animation Input
 
@@ -157,12 +159,13 @@ public class PlayerMovement : MonoBehaviour
 
         #endregion
 
+        
         // Jump logic: checks for key press, readyToJump state, and ground contact
         if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
 
             readyToJump = false;
-            
+
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
@@ -201,6 +204,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Update stored playerHeight using the current collision height
         playerHeight = playerCollision.height;
+        
+        
+        
     }
 
     /*
@@ -221,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
         float force = moveSpeed * 10f * (grounded ? 1f : airMultiplier);
         rb.AddForce(moveDirection.normalized * force, ForceMode.Force);
 
+        //Debug.Log("> Player Speed:  " + rb.velocity.magnitude.ConvertTo<float>().ToShortString(4));
     }
 
     /*
@@ -300,7 +307,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Found an Obstacle: " + castInfo.collider);
         }
-        
 
     }
     */
