@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Player\PlayerCam.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\ShootingTrail.cs" />
     <Compile Include="Assets\Scripts\Interactables\Trigger_SpawnZombies.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAndStepsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Interactables\Equip_Drop_Stuff.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />

@@ -18,6 +18,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 
 /*
     CLASS: PlayerMovement
@@ -118,10 +119,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (!changeToClimbingMovement)  //if not climbing player has those movement inputs and methods
         {
-            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f); //removed parameter whatIsGround
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround); 
 
             HandleInput();
-            ControlSpeed();
+            ControlSpeed();   
 
             rb.drag = grounded ? groundDrag : 0;
         }
@@ -185,6 +186,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        
+
         // Crouch logic: modifies collider height and reduces movement speed
         if (!isCrouching && Input.GetKeyDown(crouchKey))
         {
@@ -204,8 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Update stored playerHeight using the current collision height
         playerHeight = playerCollision.height;
-        
-        
+
         
     }
 
@@ -266,49 +268,24 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    
-    private RaycastHit groundCollision;
+
     private float currentSlopeAngle;
     private bool isOnWalkableSlope = false;
-
-    private void IsPlayerOnSlope()
+    private RaycastHit groundCollision;
+    private void IsPlayerOnSlope()      //ERRORI DA RISOLVERE QUIQUIQUIQ
     {
-        Physics.Raycast(gameObject.transform.position, Vector3.down, out groundCollision);
+        
+
+        Physics.Raycast(transform.position, Vector3.down, out groundCollision);
         currentSlopeAngle = Vector3.Angle(Vector3.up, groundCollision.normal);
-        //Debug.Log(currentSlopeAngle);
-        //Debug.Log(isOnWalkableSlope);
+        /*Debug.Log(groundCollision.collider);
+        Debug.Log(currentSlopeAngle);
+        Debug.Log(isOnWalkableSlope);*/
         if (currentSlopeAngle != 0 && currentSlopeAngle <= maxSlopeDegree)
             isOnWalkableSlope = true;
         else
             isOnWalkableSlope = false;
     }
-    /*
-    private Vector3 collidingStepDirection;
-    private float defCollidingStepDistance;
-    private float maxStepHeight;
-    private Vector3 raycastStartPos;
 
-    private Transform playerRoot;
-
-    private Vector3 halfBoxDim;
-
-    RaycastHit castInfo;
-
-    
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-        maxStepHeight = 0.7f;
-        defCollidingStepDistance = 0.05f;
-
-        raycastStartPos.Set(playerRoot.position.x, playerRoot.position.y + maxStepHeight, playerRoot.position.z);
-
-        if(Physics.BoxCast(playerRoot.position, halfBoxDim, Vector3.down, out castInfo))
-        {
-            Debug.Log("Found an Obstacle: " + castInfo.collider);
-        }
-
-    }
-    */
 
 }

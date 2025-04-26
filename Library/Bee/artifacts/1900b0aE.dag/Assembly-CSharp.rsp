@@ -404,6 +404,7 @@
 "Assets/Scripts/Interactables/Trigger_Saferoom.cs"
 "Assets/Scripts/Interactables/Trigger_SpawnZombies.cs"
 "Assets/Scripts/Player/MoveCamera.cs"
+"Assets/Scripts/Player/PlayerAndStepsBehaviour.cs"
 "Assets/Scripts/Player/PlayerCam.cs"
 "Assets/Scripts/Player/PlayerClimbing.cs"
 "Assets/Scripts/Player/playerInteraction.cs"

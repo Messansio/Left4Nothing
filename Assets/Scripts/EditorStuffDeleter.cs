@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class EditorStuffDeleter : MonoBehaviour
@@ -8,5 +9,11 @@ public class EditorStuffDeleter : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+        if (name == "spawnerModel")
+        {
+            Destroy(gameObject);
+        }
+            
     }
 }

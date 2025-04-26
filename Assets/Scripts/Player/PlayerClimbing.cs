@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerClimbing : MonoBehaviour
 {
     private PlayerMovement pmov;
+    private Rigidbody prb;
 
     public bool isPlayerClimbing;
 
@@ -15,8 +16,9 @@ public class PlayerClimbing : MonoBehaviour
 
     private void Start()
     {
+        prb = GetComponent<Rigidbody>();    
         pmov = GetComponent<PlayerMovement>();
-        climbingSpeedMultiplier = 8f;
+        climbingSpeedMultiplier = 400f;
     }
 
     
@@ -31,7 +33,8 @@ public class PlayerClimbing : MonoBehaviour
             if (Input.GetKeyDown(pmov.jumpKey))
             {
                 //jump away from trigger;
-                transform.GetComponent<Rigidbody>().AddForce(-transform.forward * pmov.jumpForce, ForceMode.Impulse);
+                
+                //transform.GetComponent<Rigidbody>().AddForce(-transform.forward * pmov.jumpForce, ForceMode.Impulse);
             }
             if (Input.GetKeyDown(pmov.crouchKey))
             {
@@ -41,24 +44,18 @@ public class PlayerClimbing : MonoBehaviour
             if(pmov.verticalInput > 0 && pmov.horizontalInput == 0)
             {
                 Debug.Log("Moving Up");
-                transform.GetComponent<Rigidbody>().AddForce(Vector3.up * climbingSpeedMultiplier, ForceMode.Acceleration);
+                prb.AddForce(Vector3.up * climbingSpeedMultiplier, ForceMode.Force);
             }
             if(pmov.verticalInput < 0 && pmov.horizontalInput == 0)
             {
                 Debug.Log("Moving Down");
-                transform.GetComponent<Rigidbody>().AddForce(Vector3.down * climbingSpeedMultiplier, ForceMode.Acceleration);
+                prb.AddForce(Vector3.down * climbingSpeedMultiplier, ForceMode.Force);
             }
-            /*
-            if(pmov.verticalInput == 0 && pmov.horizontalInput > 0)
-            {
-                Debug.Log("Moving Right");
-                transform.GetComponent<Rigidbody>().AddForce(Vector3.right * climbingSpeedMultiplier, ForceMode.Acceleration);
-            }
-            if (pmov.verticalInput == 0 && pmov.horizontalInput < 0)
-            {
-                Debug.Log("Moving Left");
-                transform.GetComponent<Rigidbody>().AddForce(Vector3.left * climbingSpeedMultiplier, ForceMode.Acceleration);
-            }*/
+
+        }
+        else
+        {
+            pmov.changeToClimbingMovement = false;
         }
         
     }
