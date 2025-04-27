@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8058074341890163873}
+  - component: {fileID: 8837746492960615117}
   m_Layer: 0
   m_Name: CameraPos
   m_TagString: Untagged
@@ -31,6 +32,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1995530067694731046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8837746492960615117
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799992298889268583}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1995182554807744545
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,9 +97,9 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -109,7 +118,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -295,6 +304,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a8a00cc559c3a439925d08f0a7095b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxStepHeight: 1
+  enablePASBDebug: 1
+  cubeRaycastPointDebugAsset: {fileID: 7708111308011430542, guid: 717a7aa0948299f4d8875a3d08f29810, type: 3}
 --- !u!1 &7846047794860780264
 GameObject:
   m_ObjectHideFlags: 0
