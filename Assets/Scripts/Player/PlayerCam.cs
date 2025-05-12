@@ -20,7 +20,15 @@ public class PlayerCam : MonoBehaviour
         pMov = orientation.parent.GetComponent<PlayerMovement>();
     }
 
-    
+    private bool AlphaCheckIfPlayerController()
+    {
+        bool isPlayerController = false;
+
+        if (orientation.parent.name == "PlayerController")
+            isPlayerController = true;
+
+        return isPlayerController;
+    }
 
     // Update is called once per frame
     void Update()
@@ -35,14 +43,20 @@ public class PlayerCam : MonoBehaviour
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
 
-        if (pMov.isPlayerMoving)
-            gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", true);
-        else
-            gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", false);
-        if (pMov.GetIsCrouching() || pMov.isWalking)
-            gameObject.GetComponent<Animator>().SetLayerWeight(1, 0);
-        else
-            gameObject.GetComponent<Animator>().SetLayerWeight(1, 1f);
+        if (!AlphaCheckIfPlayerController())
+        {
+
+            if (pMov.isPlayerMoving)
+                gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", true);
+            else
+                gameObject.GetComponent<Animator>().SetBool("IsOwningPlayerMoving", false);
+            if (pMov.GetIsCrouching() || pMov.isWalking)
+                gameObject.GetComponent<Animator>().SetLayerWeight(1, 0);
+            else
+                gameObject.GetComponent<Animator>().SetLayerWeight(1, 1f);
+
+        }
+        
 
     }
 }

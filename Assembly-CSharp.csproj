@@ -60,20 +60,23 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.29f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Player\CharacterControler\Basic Movement.cs" />
     <Compile Include="Assets\Scripts\EditorStuffDeleter.cs" />
     <Compile Include="Assets\Director\game_direction.cs" />
     <Compile Include="Assets\Scripts\Interactables\flashlight.cs" />
     <Compile Include="Assets\Director\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Player\Rigidbody\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Ai\z_boss_class.cs" />
     <Compile Include="Assets\Director\SinglePlayer.cs" />
     <Compile Include="Assets\Scripts\Interactables\Trigger_Climbable.cs" />
     <Compile Include="Assets\Scripts\Ai\Teammate_AI.cs" />
     <Compile Include="Assets\Scripts\UI\crosshair_class.cs" />
     <Compile Include="Assets\Scripts\Ai\ZAI_Pathfind_Conditions.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerClimbing.cs" />
     <Compile Include="Assets\Scripts\Player\MoveCamera.cs" />
     <Compile Include="Assets\Scripts\Ai\zombie_class.cs" />
+    <Compile Include="Assets\Scripts\Player\Rigidbody\PlayerAndStepsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Interactables\Trigger_Saferoom.cs" />
+    <Compile Include="Assets\Scripts\Player\Rigidbody\PlayerClimbing.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\PrimaryWeapon.cs" />
     <Compile Include="Assets\Scripts\Ai\ZAI_Manual.cs" />
     <Compile Include="Assets\Scripts\Player\playerInteraction.cs" />
@@ -81,10 +84,8 @@
     <Compile Include="Assets\Scripts\Player\PlayerCam.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\ShootingTrail.cs" />
     <Compile Include="Assets\Scripts\Interactables\Trigger_SpawnZombies.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerAndStepsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Interactables\Equip_Drop_Stuff.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
