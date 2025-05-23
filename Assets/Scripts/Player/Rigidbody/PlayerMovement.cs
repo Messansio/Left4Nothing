@@ -84,6 +84,16 @@ public class PlayerMovement : MonoBehaviour
 
     #region Unity Lifecycle
 
+    public List<ContactPoint> contactPoints = new List<ContactPoint>();
+    private void OnCollisionEnter(Collision collision)
+    {
+        contactPoints.AddRange(collision.contacts);
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        contactPoints.AddRange(collision.contacts);
+    }
+
     /*
         Called once at startup. Assigns movement speeds, initializes
         crouched speed, sets up the Rigidbody, and resets player states.
@@ -283,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     private float currentSlopeAngle;
-    private bool isOnWalkableSlope = false;
+    public bool isOnWalkableSlope = false;
     private RaycastHit groundCollision;
     private void IsPlayerOnSlope()      //ERRORI DA RISOLVERE QUIQUIQUIQ
     {

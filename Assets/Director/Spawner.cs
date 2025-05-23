@@ -19,7 +19,7 @@ public class playerSpawner : MonoBehaviour
     {
         sp_pos = spawnpoint.transform.position.ConvertTo<Vector3>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.T))
             StartCoroutine(spawnPlayer());
