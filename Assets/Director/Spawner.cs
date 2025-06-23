@@ -15,23 +15,38 @@ public class playerSpawner : MonoBehaviour
 
     private Vector3 sp_pos;
 
+    public bool usePlayerController = false;
+
+
     private void Start()
     {
+        
+        if (usePlayerController)
+        {
+            Destroy(player);
+            player = GameObject.Find("PlayerController");
+        }
+            
+
         sp_pos = spawnpoint.transform.position.ConvertTo<Vector3>();
     }
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.T))
-            StartCoroutine(spawnPlayer());
+        {
+            //StartCoroutine(spawnPlayer());
+            Invoke(nameof(spawnPlayer), 0.2f);
+        }
+            
         if (Input.GetKeyDown(KeyCode.Z))
             spawnZombieToView();
     }
     
-    IEnumerator spawnPlayer()
+    private void spawnPlayer()
     {
         Debug.Log("teleporting...");
-        yield return new WaitForSeconds(0.1f);
         player.transform.position = sp_pos;
+        player.GetComponent<Rigidbody>().MovePosition(spawnpoint.transform.position);
     }
 
 

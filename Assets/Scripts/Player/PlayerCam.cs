@@ -9,12 +9,20 @@ public class PlayerCam : MonoBehaviour
 
     private PlayerMovement pMov;
     public Transform orientation;
+    private playerSpawner pSpawner;
 
     float xRotation;
     float yRotation;
     // Start is called before the first frame update
     void Start()
     {
+        pSpawner = GameObject.Find("game_director").GetComponent<playerSpawner>();
+
+        if (AlphaCheckIfPlayerController())
+        {
+            AssignCamToPlayerController();
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pMov = orientation.parent.GetComponent<PlayerMovement>();
@@ -22,12 +30,9 @@ public class PlayerCam : MonoBehaviour
 
     private bool AlphaCheckIfPlayerController()
     {
-        bool isPlayerController = false;
 
-        if (orientation.parent.name == "PlayerController")
-            isPlayerController = true;
+        return pSpawner.usePlayerController;
 
-        return isPlayerController;
     }
 
     // Update is called once per frame
@@ -54,9 +59,15 @@ public class PlayerCam : MonoBehaviour
                 gameObject.GetComponent<Animator>().SetLayerWeight(1, 0);
             else
                 gameObject.GetComponent<Animator>().SetLayerWeight(1, 1f);
-
+            
         }
         
 
+    }
+
+
+    private void AssignCamToPlayerController()
+    {
+        orientation = GameObject.Find("PlayerController").transform.Find("Orientation").transform;
     }
 }

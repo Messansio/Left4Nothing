@@ -33,6 +33,7 @@ public class PrimaryWeapon : MonoBehaviour
     private zombie_class z;
     private Shooting_Trail st;
     private PlayerMovement pMov;
+    private playerSpawner pSpawner;
 
     [Header("Audio")]
     public AudioClip gunshot;
@@ -54,7 +55,14 @@ public class PrimaryWeapon : MonoBehaviour
 
     private void Start()
     {
-        pMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+        if (pSpawner.usePlayerController)
+            pMov = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerMovement>();
+        else
+            pMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+
+
         playerOrientation = GameObject.FindGameObjectWithTag("MainCamera");
         damage = 30f;
         ammo = maxAmmo;

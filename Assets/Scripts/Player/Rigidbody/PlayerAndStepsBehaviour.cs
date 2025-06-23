@@ -1,6 +1,12 @@
 
+using System;
+using System.Collections;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.ProBuilder;
 using UnityEngine;
+using UnityEngine.ProBuilder;
+using UnityEngine.UI;
 
 public class PlayerAndStepsBehaviour : MonoBehaviour
 {
@@ -11,10 +17,17 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
     public GameObject cubeRaycastPointDebugAsset;
     private Transform debugObjects_Transform;
     public PlayerMovement plrmov;
+    Rigidbody posBody;
+    Vector3 velocity;
+    Vector3 lastVelocity;
+    public BoxCollider boxCol;
+    private LayerMask boxCastIgnoreMask;
 
     private void Start()
     {
+        posBody = GetComponentInParent<Rigidbody>();
         debugObjects_Transform = GameObject.Find("DEBUG_Objects").transform;
+        
     }
 
     private bool CheckIfMoving()
@@ -27,34 +40,51 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
     private bool CheckIfStep()
     {
         bool isStep = false;
-
+        /*
         foreach (ContactPoint contact in plrmov.contactPoints)
         {
-            if (contact.normal != Vector3.up && !plrmov.isOnWalkableSlope)
+            if (contact.normal != Vector3.up)
             {
-                //Debug.Log(contact.normal);
                 isStep = true;
                 CP = contact;
             }
                 
+        }*/
+
+        isStep = GetIfSteppable();
+
+
+        if (plrmov.isOnWalkableSlope || !plrmov.GetIsGrounded())
+        {
+            isStep = false;
         }
+
         return isStep;
     }
 
+    
+
     private void FixedUpdate()
     {
-        if (CheckIfMoving() && CheckIfStep())
-        {
-            //Debug.Log(CheckIfStep());
-            if (CanPlayerStepOn(CP))
-            {
-                StepOnSurface(CP);
-            }
-            plrmov.contactPoints.Clear();
-        }
-        
+        RaycastFloorMatrix();
 
+        //velocity = new(posBody.velocity.x, 0, posBody.velocity.z);
+        if (CheckIfStep())
+        {
+            if (GetIfSteppable())
+            {
+                ForceGroundedCondition();
+                StepOnSurface();
+            }
+        }
+        //lastVelocity = velocity;
     }
+
+
+
+
+
+    ///                    DEPRECATED
 
     /// Checks if Player can step on touched obstacle/step
     /// ( requires a ContactPoint )
@@ -69,34 +99,118 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
 
     RaycastHit hitInfo;
     Vector3 origin;
+    bool result;
+    int debugCubeCount;
+    Vector3 stepTestDir;
 
     private bool CanPlayerStepOn(ContactPoint stepCP)
     {
-        bool result = false;
 
-        int debugCubeCount = debugObjects_Transform.childCount;
-
+        result = false;
+        debugCubeCount = debugObjects_Transform.childCount;
 
         origin = new Vector3(stepCP.point.x, transform.position.y, stepCP.point.z);
         Vector3 direction = Vector3.down;
-        Vector3 stepTestDir = new Vector3(origin.x + ( - (stepCP.normal.x/10)), origin.y + maxStepHeight, origin.z + ( - (stepCP.normal.z/10)));
+        stepTestDir = new Vector3(origin.x + ( - (stepCP.normal.x/10)), origin.y + maxStepHeight, origin.z + ( - (stepCP.normal.z/10)));
 
-        //Debug.Log(origin);
 
         if (Physics.Raycast(new Ray(stepTestDir, direction), out hitInfo, maxStepHeight))
         {
             result = true;
-            if (enablePASBDebug && debugCubeCount > 1)
-                Destroy(debugObjects_Transform.GetChild(0).gameObject);
             if (enablePASBDebug)
-                Instantiate(cubeRaycastPointDebugAsset, hitInfo.point, Quaternion.identity, debugObjects_Transform);
-            
+                Debug.DrawLine(stepTestDir, hitInfo.point, Color.yellow, 2.5f);
         }
-        
-
-        //Debug.Log(result);
         return result;
     }
+
+
+    
+
+
+
+
+
+
+    public int RaysOnSingleAxis = 5;
+    public float matrixSizeAddition = 0.1f;
+
+    private void RaycastFloorMatrix()
+    {
+        result = false;
+        RaycastHit sbam, oldSbam = default;
+        
+
+        float maxMatrixDistance = boxCol.size.x + matrixSizeAddition;
+        float distanceBetweenRays = maxMatrixDistance / ( RaysOnSingleAxis - 1 );
+        float x_matrixDist = 0;
+        float z_matrixDist = 0;
+        float fixedDistance = 0.5f; // SERVE PER EVITARE CHE IL RAYCAST VADA SOTTO IL PAVIMENTO IN ALCUNI CASI
+
+        Vector3 objectFoot = transform.position - new Vector3(maxMatrixDistance/2, 0, maxMatrixDistance/2);
+
+        
+
+        for (x_matrixDist = 0; x_matrixDist <= maxMatrixDistance; x_matrixDist += distanceBetweenRays)
+        {
+
+            for (z_matrixDist = 0; z_matrixDist <= maxMatrixDistance; z_matrixDist += distanceBetweenRays)
+            {
+                if (Physics.Raycast(objectFoot + new Vector3(x_matrixDist, fixedDistance, z_matrixDist), Vector3.down, out sbam))
+                {
+                    Debug.DrawLine(objectFoot + new Vector3(x_matrixDist, fixedDistance, z_matrixDist), sbam.point, Color.blue);
+
+
+                    if (x_matrixDist == 0 || z_matrixDist == 0)
+                        oldSbam = sbam;
+                    else
+                        GetShortestRay(sbam, oldSbam);
+
+                }
+                
+            }
+        }
+    }
+
+    float height;
+    float currentRayDistance;
+    private void GetShortestRay(RaycastHit rayHit, RaycastHit oldRayHit)
+    {
+        //get ray distance and store it
+        float storedRayDistance = oldRayHit.distance;
+        currentRayDistance = rayHit.distance;
+
+
+        if (storedRayDistance <= currentRayDistance)
+        {
+            currentRayDistance = storedRayDistance;
+            height = oldRayHit.point.y - transform.position.y;
+        }else
+            height = rayHit.point.y - transform.position.y;
+
+
+    }
+
+    private bool GetIfSteppable()
+    {
+        if (height > transform.position.y && height <= maxStepHeight)
+            result = true;
+        else
+            result = false;
+
+        Debug.Log("currentRayDistance " + currentRayDistance);
+        Debug.Log("playerRoot Y " + transform.position.y);
+        Debug.Log("height " + height);
+        Debug.Log("is steppable? " + result);
+        return result;
+    }
+
+
+    private void ForceGroundedCondition()
+    {
+         plrmov.SetIsGrounded(true);
+    }
+
+
 
     /// Offsets Player position based on Player origin and latest Raycast hit height point
     /// ( requires a RaycastHit )
@@ -104,85 +218,14 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
     /// \offsetY    ;no desc.
     /// \pos        ;no desc.
     /// 
-    private void StepOnSurface(ContactPoint stepCP)
-    {
-        
-        Rigidbody posBody = GetComponentInParent<Rigidbody>();
-        Vector3 velocity = posBody.velocity;
-        Vector3 lastVelocity = velocity;
-        float offsetY =  hitInfo.point.y - origin.y;
-        Vector3 offsetVector = new(0, offsetY, 0);
-
-        posBody.MovePosition(posBody.position + offsetVector);
-        posBody.velocity = lastVelocity;
-
-
-        Debug.Log(offsetY);
-        Debug.Log(posBody.position.y);
-    }
-
-    /*
-    private bool IsNextToStep()
-    {
-        bool getIfNextToStep = false;
-
-        int debugCubeCount = debugObjects_Transform.childCount;
-
-        #region Different Raycastings
-
-        RaycastHit hitInfo;
-        bool frwCast = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitInfo, 1f, LayerMask.NameToLayer("whatIsGround"));
-        
-
-        #endregion
-
-        
-
-        if (frwCast && CheckInverseNormalAngle(hitInfo))
-        {
-            if (enablePASBDebug)
-            {
-                Debug.Log(hitInfo.collider);
-                //Debug.Log(hitInfo.colliderInstanceID);
-
-                Instantiate(cubeRaycastPointDebugAsset, hitInfo.point, Quaternion.identity, debugObjects_Transform);
-                
-            }
-
-
-            getIfNextToStep = true;
-        }
-    
-        if (enablePASBDebug && debugCubeCount > 1)
-            Destroy(debugObjects_Transform.GetChild(0).gameObject);
-
-
-        return getIfNextToStep;
-    }
-
     private void StepOnSurface()
     {
-        //Player Body Gets Moved Up the Step's Height
-        //Debug.Log("steponsurface");
-    }
-
-    private bool CheckInverseNormalAngle(RaycastHit hit)
-    {
-        bool isAngleVertical = false;
-
-        float angle = Vector3.Angle(Vector3.up, -hit.normal);
-
         
-        if (angle <= 92 && angle >= -92)
-            isAngleVertical = true;
+        float offsetY = height + 0.0001f;
+        Vector3 offsetVector = new(0, offsetY, 0);
+        
 
-        if (enablePASBDebug)
-        {
-            //Debug.Log(angle);
-            //Debug.Log(isAngleVertical);
-        }
+        posBody.position += offsetVector;
 
-        return isAngleVertical;
     }
-    */
 }
