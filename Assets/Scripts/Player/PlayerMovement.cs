@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /*
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Important")]
     private playerSpawner pSpawner;
+    private PlayerAndStepsBehaviour PASB;
 
     [Header("Player Components")]
     public bool useBoxCollider;
@@ -33,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _controller;
 
     [Header("Movement Settings")]
-    public float moveSpeed;
+    public float moveSpeed = 0.5f;
     public float runningSpeed;
     public float walkSpeed;  // New variable for walking speed
     public float crouchSpeed;
@@ -76,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
     #region RIGIDBODY CYCLE
     private void RigidBodyStarter()
     {
+        PASB = transform.Find("PlayerRoot").GetComponent<PlayerAndStepsBehaviour>();
+
         // Initialize movement speeds
         runningSpeed = moveSpeed;
         walkSpeed = moveSpeed * 0.6f;  // Set walking speed to 60% of running speed
@@ -99,13 +103,15 @@ public class PlayerMovement : MonoBehaviour
     }
     private void RigidBodyUpdate()
     {
+        
+
         // Get movement input
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         if (!changeToClimbingMovement)  //if not climbing player has those movement inputs and methods
         {
-
+            //FindIfGrounded();
             CheckIfGrounded();
             HandleInput();
 
@@ -143,12 +149,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void PlayerControllerUpdate()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
         
-        //_controller.SimpleMove(moveSpeed);
     }
+    private void PlayerControllerFixedUpdate()
+    {
+        DoFixedMovement();
+    }
+
+
     #endregion
 
 
@@ -164,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _controller = GetComponent<CharacterController>();
+            PlayerControllerStarter();
         }
     }
     private void Update()
@@ -185,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
+            PlayerControllerFixedUpdate();
         }
     }
 
@@ -193,6 +202,50 @@ public class PlayerMovement : MonoBehaviour
     /// SCRIPT REGION IF RIGIDBODY PLAYER
     // 
     #region RIGIDBODY CODE
+
+
+
+
+    private void FindIfGrounded()
+    {
+        double rootDistance = 0.5f;
+
+        if (PASB.sbam.distance <= rootDistance)
+        {
+            Debug.Log(PASB.sbam.distance);
+            grounded = true;
+            hasContactWithFloor = true;
+
+            float groundAngle = Vector3.Angle(PASB.sbam.normal, Vector3.up);
+
+
+            if (groundAngle >= 0 && groundAngle <= maxSlopeDegree)
+            {
+
+                hasContactWithFloor = true;
+
+            }
+            //condizione per sapere se l'oggetto è un muro
+            else if (groundAngle > maxSlopeDegree)
+            {
+                grounded = false;
+                rb.useGravity = true;
+                hasContactWithWall = true;
+            }
+        }
+        
+
+        if (PASB.sbam.distance > rootDistance)
+        {
+            grounded = false;
+            rb.useGravity = true;
+            isFalling = true;
+            hasContactWithFloor = false;
+        }
+        else
+            isFalling = false;
+    }
+
 
     #region ContactPoints and Collisions
 
@@ -212,9 +265,6 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Exited " + collision);
 
         contactPoints.Clear();
-        //isOnWalkableSlope = false;
-        //hasContactWithFloor = false;
-        //hasContactWithWall = false;
 
     }
     #endregion
@@ -233,11 +283,8 @@ public class PlayerMovement : MonoBehaviour
         float fixedBoundZ = boxCollider.bounds.extents.z - 0.1f;
         float fixedBoundX = boxCollider.bounds.extents.x - 0.1f;
         Vector3 boxExtents = new Vector3(fixedBoundX, 0.1f, fixedBoundZ);
-        //Vector3 halfExtents = boxCollider.bounds.extents;
 
         Physics.BoxCast(playerRoot.position + Vector3.up, boxExtents, Vector3.down, out RaycastHit boxHit, Quaternion.identity, math.INFINITY);
-        //debugBox.transform.localScale = boxExtents;
-        //GameObject.Instantiate(debugBox, boxHit.point, Quaternion.identity);
 
 
         double rootDistance = 1.0f;
@@ -249,8 +296,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             isFalling = false;
-
-        //Debug.Log("boxHit Distance: " + boxHit.distance);
 
     }
 
@@ -312,27 +357,9 @@ public class PlayerMovement : MonoBehaviour
         GroundBoxCast(playerRoot);
 
         isTouchingBothWallAndFloor = hasContactWithFloor && hasContactWithWall;
-        /*
-        Transform debugObjects_Transform = GameObject.Find("DEBUG_Objects").transform;
-        int debugCubeCount = debugObjects_Transform.childCount;
-
-        if (debugCubeCount > 5 || contactPoints.Count == 0)
-            Destroy(debugObjects_Transform.GetChild(0).gameObject);
-        else
-        {
-            GameObject.Instantiate(debugBox, CPFloor.point, Quaternion.identity, debugObjects_Transform);
-            GameObject.Instantiate(debugBox, CPWall.point, Quaternion.identity, debugObjects_Transform);
-        }
-        */
-
-        
-        //Debug.Log("Last ContactPoint Angle: " + CPAngle);
-        //Debug.Log("Angle between CPFloor and Vector3.up: " + Vector3.Angle(CPFloor.normal, Vector3.up));
-        //Debug.Log("Angle between CPWall and Vector3.up: " + Vector3.Angle(CPWall.normal, Vector3.up));
-
-
 
         ResolveContactsForGroundedCheck();
+
 
     }
 
@@ -489,7 +516,16 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         float force = moveSpeed * 10f * (grounded ? 1f : airMultiplier);
+
+
+
+
         rb.AddForce(moveDirection.normalized * force, ForceMode.Force);
+        //rb.MovePosition(rb.position + moveDirection.normalized * Time.fixedDeltaTime * moveSpeed);
+            
+
+
+
 
         //Debug.Log("> Player Speed:  " + rb.velocity.magnitude.ConvertTo<float>().ToShortString(4));
     }
@@ -531,12 +567,59 @@ public class PlayerMovement : MonoBehaviour
     //
     #region PLAYERCONTROLLER CODE
 
-    public float gravity = -9.81f;
-    private float gravityForce;
-    private void AddGravity()
+    private void Animations(Vector3 fixedMovement)
     {
-        //_controller.velocity.y += gravity * Time.fixedDeltaTime;
+        if (fixedMovement != Vector3.zero)
+            isPlayerMoving = true;
+        else
+            isPlayerMoving = false;
+        if (_controller.isGrounded)
+            grounded = true;
+        else
+            grounded = false;
+    }
+    private void DoFixedMovement()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
         
+        Vector3 moveDirectionForward = verticalInput * orientation.forward;
+        Vector3 moveDirectionHorizontal = horizontalInput * orientation.right;
+
+        Vector3 velocity = moveDirectionForward + moveDirectionHorizontal;
+        Vector3 fixedMovement = Vector3.ClampMagnitude(velocity, moveSpeed) / Time.fixedDeltaTime;
+
+        if(!_controller.isGrounded)
+            AddGravityForce(fixedMovement);
+
+        _controller.SimpleMove(fixedMovement);
+
+        HandleJump();
+
+        Animations(fixedMovement);
+    }
+
+    Vector3 movingDirection;
+    public float playerWeight = 70f;
+    public float gravity = -9.81f;
+    private void AddGravityForce(Vector3 fixedMovement)
+    {
+        movingDirection.y -= gravity * Time.fixedDeltaTime;
+        _controller.Move(movingDirection * Time.fixedDeltaTime);
+    }
+
+    private void HandleJump()
+    {
+
+        
+        
+    }
+    private void AddMovementDrag()
+    {
+        //se il tipo si è mosso prendo la velocità che ha
+        
+        //se mi fermo do una piccola spinta utilizzando la velocità memorizzata
     }
 
     #endregion

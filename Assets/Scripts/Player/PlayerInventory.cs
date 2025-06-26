@@ -11,6 +11,7 @@ public class PlayerInventory : MonoBehaviour
     private GameObject grenade;
     private GameObject aidItem;
 
+    private GameObject playerCam;
     private GameObject[] playerInvArray;
     private int currentSelected = 0;
 
@@ -26,10 +27,12 @@ public class PlayerInventory : MonoBehaviour
 
     private void Awake()
     {
-        primaryWeapon = GameObject.Find("primary_weapon");
-        secondaryWeapon = GameObject.Find("secondary_weapon");
-        grenade = GameObject.Find("grenade_item");
-        aidItem = GameObject.Find("aid_item");
+        playerCam = GameObject.Find("PlayerCamera");
+
+        primaryWeapon = playerCam.transform.Find("primary_weapon").gameObject;
+        secondaryWeapon = playerCam.transform.Find("secondary_weapon").gameObject;
+        grenade = playerCam.transform.Find("grenade_item").gameObject;
+        aidItem = playerCam.transform.Find("aid_item").gameObject;
 
         secondaryWeapon.SetActive(false);
         grenade.SetActive(false);

@@ -155,7 +155,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1366035676955019430}
   - component: {fileID: 806188656796007434}
-  - component: {fileID: 7532095202338245636}
+  - component: {fileID: 4451534359893569814}
+  - component: {fileID: 1156288460609188325}
   - component: {fileID: 852165087085850326}
   - component: {fileID: 171866166748680332}
   - component: {fileID: 3010883281925529301}
@@ -206,13 +207,40 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 40
-  m_StepOffset: 0.3
+  m_Radius: 0.4
+  m_SlopeLimit: 43
+  m_StepOffset: 0.5
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7532095202338245636
+--- !u!54 &4451534359893569814
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559347558001038545}
+  serializedVersion: 4
+  m_Mass: 60
+  m_Drag: 5
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &1156288460609188325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,13 +249,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 6559347558001038545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1ef19efc4c141d4e9943c89c134cc3f, type: 3}
+  m_Script: {fileID: 11500000, guid: d3aa7a22146f8a44da809fff2701fcd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSpeed: 8
-  jumpHeight: 2
-  gravity: -2
+  useBoxCollider: 0
+  playerCollision: {fileID: 0}
+  moveSpeed: 0.1
+  runningSpeed: 0
+  walkSpeed: 0
+  crouchSpeed: 0
+  groundDrag: 0
+  jumpForce: 0
+  airMultiplier: 0
+  maxSlopeDegree: 40
+  isFalling: 0
   jumpKey: 32
+  crouchKey: 306
+  walkKey: 304
+  playerHeight: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  crouchHeightMultiplier: 0.5
+  crouchSpeedMultiplier: 0.5
+  orientation: {fileID: 8059045406011234393}
+  changeToClimbingMovement: 0
+  isWalking: 0
+  horizontalInput: 0
+  verticalInput: 0
+  isPlayerMoving: 0
+  debugBox: {fileID: 0}
+  isOnWalkableSlope: 0
+  playerWeight: 80
+  gravity: -9.81
 --- !u!114 &852165087085850326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerFlashlight: {fileID: 0}
-  enableFlashlightDebugLogs: 1
+  enableFlashlightDebugLogs: 0
   flashlightKey: 102
 --- !u!1 &7501820616365971705
 GameObject:

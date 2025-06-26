@@ -67,15 +67,13 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         RaycastFloorMatrix();
-
+        //LateralCast();
         //velocity = new(posBody.velocity.x, 0, posBody.velocity.z);
         if (CheckIfStep())
         {
-            if (GetIfSteppable())
-            {
-                ForceGroundedCondition();
-                StepOnSurface();
-            }
+            ForceGroundedCondition();
+            StepOnSurface();
+            
         }
         //lastVelocity = velocity;
     }
@@ -128,16 +126,23 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
 
 
 
+    private void LateralCast()
+    {
 
+        if(Physics.Raycast(transform.position, Vector3.left, out RaycastHit info, matrixSizeAddition)){
+            Debug.DrawLine(transform.position, info.point, Color.yellow);
+            Debug.Log(info.distance);
+        }
+    }
 
 
     public int RaysOnSingleAxis = 5;
     public float matrixSizeAddition = 0.1f;
-
+    public RaycastHit sbam = default;
     private void RaycastFloorMatrix()
     {
         result = false;
-        RaycastHit sbam, oldSbam = default;
+        RaycastHit oldSbam = default;
         
 
         float maxMatrixDistance = boxCol.size.x + matrixSizeAddition;
@@ -160,7 +165,7 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
                     Debug.DrawLine(objectFoot + new Vector3(x_matrixDist, fixedDistance, z_matrixDist), sbam.point, Color.blue);
 
 
-                    if (x_matrixDist == 0 || z_matrixDist == 0)
+                    if (x_matrixDist == 0f || z_matrixDist == 0f)
                         oldSbam = sbam;
                     else
                         GetShortestRay(sbam, oldSbam);
@@ -192,15 +197,15 @@ public class PlayerAndStepsBehaviour : MonoBehaviour
 
     private bool GetIfSteppable()
     {
-        if (height > transform.position.y && height <= maxStepHeight)
+        if (height >= transform.position.y && height <= maxStepHeight)
             result = true;
         else
             result = false;
 
-        Debug.Log("currentRayDistance " + currentRayDistance);
-        Debug.Log("playerRoot Y " + transform.position.y);
-        Debug.Log("height " + height);
-        Debug.Log("is steppable? " + result);
+        //Debug.Log("currentRayDistance " + currentRayDistance);
+        //Debug.Log("playerRoot Y " + transform.position.y);
+        //Debug.Log("height " + height);
+        //Debug.Log("is steppable? " + result);
         return result;
     }
 

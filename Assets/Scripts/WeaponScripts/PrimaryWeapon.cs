@@ -55,11 +55,13 @@ public class PrimaryWeapon : MonoBehaviour
 
     private void Start()
     {
+        pSpawner = GameObject.Find("game_director").GetComponent<playerSpawner>();
+
 
         if (pSpawner.usePlayerController)
-            pMov = GameObject.FindGameObjectWithTag("PlayerController").GetComponent<PlayerMovement>();
+            pMov = GameObject.Find("PlayerController").GetComponent<PlayerMovement>();
         else
-            pMov = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+            pMov = GameObject.Find("Player").GetComponent<PlayerMovement>();
 
 
 
@@ -77,7 +79,7 @@ public class PrimaryWeapon : MonoBehaviour
     {
         if(gameObject.transform.parent != null && gameObject.transform.parent.name == "primary_weapon")
         {
-            
+
             PlayMovingRifleAnimation();
             
             if (Input.GetMouseButton(0) && hasAmmo)
@@ -148,7 +150,7 @@ public class PrimaryWeapon : MonoBehaviour
 
     private IEnumerator checkIfShotZombie()
     {
-        if (hit.collider.CompareTag("Enemy") == true && !hit.transform.GetComponent<zombie_class>().isZombieDead)
+        if (hit.collider.CompareTag("Enemy") && !hit.transform.GetComponent<zombie_class>().isZombieDead)
         {
             hitZombie = true;
             z = hit.transform.GetComponentInParent<zombie_class>();

@@ -39,7 +39,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556381254691039184}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3051fad4e4f1fc04c81e2f1a6519158b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -184,7 +184,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &4170721104623348485
@@ -199,13 +199,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aa7a22146f8a44da809fff2701fcd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useBoxCollider: 0
+  useBoxCollider: 1
   playerCollision: {fileID: 1033591363868729860}
-  moveSpeed: 230
+  moveSpeed: 200
   runningSpeed: 0
   walkSpeed: 0
   crouchSpeed: 0
-  groundDrag: 5
+  groundDrag: 7
   jumpForce: 460
   airMultiplier: 0.07
   maxSlopeDegree: 40
@@ -225,8 +225,9 @@ MonoBehaviour:
   horizontalInput: 0
   verticalInput: 0
   isPlayerMoving: 0
-  debugBox: {fileID: 0}
+  debugBox: {fileID: 7708111308011430542, guid: 717a7aa0948299f4d8875a3d08f29810, type: 3}
   isOnWalkableSlope: 0
+  gravity: -9.81
 --- !u!114 &8174281980475382774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995182554807744545}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83eb9274ad6f198469252aa42cc5e78a, type: 3}
   m_Name: 
@@ -339,12 +340,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a8a00cc559c3a439925d08f0a7095b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStepHeight: 1
+  maxStepHeight: 0.5
   enablePASBDebug: 1
-  cubeRaycastPointDebugAsset: {fileID: 7708111308011430542, guid: 717a7aa0948299f4d8875a3d08f29810, type: 3}
+  cubeRaycastPointDebugAsset: {fileID: 3688723408569930133, guid: 309529d332354cb439d2039a745be9d2, type: 3}
   plrmov: {fileID: 4170721104623348485}
   boxCol: {fileID: 7636476821377624317}
   RaysOnSingleAxis: 5
+  matrixSizeAddition: 0.005
 --- !u!1 &7846047794860780264
 GameObject:
   m_ObjectHideFlags: 0

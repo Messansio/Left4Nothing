@@ -8,7 +8,8 @@ using UnityEngine;
 public class playerSpawner : MonoBehaviour
 {
     [Header("Game Objects")]
-    public GameObject player;
+    private GameObject player;
+    private GameObject playerController;
     public GameObject spawnpoint;
     public GameObject cameraOrientation;
     public GameObject zombieAsset;
@@ -20,22 +21,28 @@ public class playerSpawner : MonoBehaviour
 
     private void Start()
     {
-        
+        player = GameObject.Find("Player");
+        playerController = GameObject.Find("PlayerController");
+
         if (usePlayerController)
         {
             Destroy(player);
-            player = GameObject.Find("PlayerController");
+            player = playerController;
         }
-            
+        else
+        {
+            Destroy(playerController);
+        }
 
-        sp_pos = spawnpoint.transform.position.ConvertTo<Vector3>();
+
+            sp_pos = spawnpoint.transform.position.ConvertTo<Vector3>();
     }
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            //StartCoroutine(spawnPlayer());
-            Invoke(nameof(spawnPlayer), 0.2f);
+            if(usePlayerController)
+                Invoke(nameof(spawnPlayer), 0.2f);
         }
             
         if (Input.GetKeyDown(KeyCode.Z))
